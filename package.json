@@ -1,0 +1,28 @@
+{
+  "name": "orderbook-api-service",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=dev node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Orderbookio/orderbook-api-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Orderbookio/orderbook-api-service/issues"
+  },
+  "homepage": "https://github.com/Orderbookio/orderbook-api-service#readme",
+  "dependencies": {
+    "hapi": "^17.2.3",
+    "hapi-swagger": "^9.1.1",
+    "inert": "^5.1.0",
+    "joi": "^13.1.2",
+    "log4js": "^2.5.3",
+    "vision": "^5.3.2"
+  }
+}

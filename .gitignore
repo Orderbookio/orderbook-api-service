@@ -1,6 +1,4 @@
 # Build files
-front/dist
-front/webpack_cache
 .env
 
 # Logs
@@ -69,14 +67,11 @@ dist/
 # IDE/Editor data
 .idea/
 
-back/store.json
-back/*.sqlite
-back/*.sqlite-journal
-
 *.DS_Store
 
 /front/src/index.html
 
 # package-lock
-/back/package-lock.json
-/front/package-lock.json
+package-lock.json
+
+/logs
