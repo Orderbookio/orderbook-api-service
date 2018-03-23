@@ -1,3 +1,4 @@
+require('app-module-path').addPath(__dirname);
 const Hapi = require('hapi');
 const path = require('path');
 const fs = require('fs');

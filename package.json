@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Orderbookio/orderbook-api-service#readme",
   "dependencies": {
+    "axios": "^0.18.0",
+    "ethereumjs-util": "^5.1.5",
     "hapi": "^17.2.3",
     "hapi-swagger": "^9.1.1",
     "inert": "^5.1.0",

@@ -8,7 +8,7 @@ module.exports = [
     config: {
       description: 'Get todo',
       notes: 'Returns a todo item by the id passed in the path',
-      tags: ['api'], // ADD THIS TAG
+      tags: ['api'],
       validate: {
         params: {
           id : Joi.number()

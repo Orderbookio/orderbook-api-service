@@ -4,7 +4,8 @@ const {
 
 class BaseConfig {
   constructor() {
-    this.port = SERVER_PORT || 3000;
+    this.port = SERVER_PORT || 5000;
+    this.orderbookUrl = 'http://localhost:3000';
     this.log4jsConfig = {
       appenders: {
         out: {
