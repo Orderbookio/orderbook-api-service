@@ -1,14 +1,13 @@
-require('app-module-path').addPath(__dirname);
 const Hapi = require('hapi');
 const path = require('path');
 const fs = require('fs');
 const Inert = require('inert');
 const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
-const Pack = require('../package');
 const log4js = require('log4js');
 
-const config = require('./config/index');
+let config = require('./config/index');
+const Pack = require('../package');
 
 log4js.configure(config.log4jsConfig);
 
@@ -47,6 +46,8 @@ const init = async () => {
     }
   ]);
 
+
+
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
 };
@@ -56,4 +57,8 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-init();
+if (!module.parent) { //for tests
+  init();
+}
+
+module.exports = server;

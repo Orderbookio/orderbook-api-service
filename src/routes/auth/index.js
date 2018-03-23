@@ -13,8 +13,8 @@ module.exports = [
       tags: ['api'],
       validate: {
         payload: {
-          email : Joi.string().email().description('the id for the todo item'),
-          password : Joi.string().description('the id for the todo item'),
+          email : Joi.string().required().email().description('the id for the todo item'),
+          password : Joi.string().required().description('the id for the todo item'),
         }
       },
     },
