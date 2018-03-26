@@ -1,4 +1,5 @@
-const test = require('ava');
+const { expect } = require('chai');
+
 const server =  require('./../../../src/server');
 
 const requestDefaults = {
@@ -7,11 +8,13 @@ const requestDefaults = {
   payload: {}
 };
 
-test('endpoint test | POST /login | empty payload -> 400 Bad Request', t => {
-  const request = Object.assign({}, requestDefaults);
+describe('endpoint test | POST /login', () => {
+  it('empty payload -> 400 Bad Request', () => {
+    const request = Object.assign({}, requestDefaults);
 
-  return server.inject(request)
-    .then(response => {
-      t.is(response.statusCode, 400, 'status code is 400');
-    });
+    return server.inject(request)
+      .then(response => {
+        expect(response.statusCode).to.be.equal(400);
+      });
+  });
 });

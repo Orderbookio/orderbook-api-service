@@ -16,11 +16,11 @@ module.exports = [
         }
       },
     },
-    handler: (request, h) => {
+    handler: (request, reply) => {
       LOG.info(`Requested index route`);
       LOG.warn(`Requested index route`);
       LOG.error(`Requested index route`);
-      return 'Hello, world!';
+      reply('Hello, world!');
     }
   }
 ];

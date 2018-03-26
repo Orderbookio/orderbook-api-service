@@ -10,9 +10,13 @@ class LoginHandler {
     const passwordHash = ethUtils.sha3(password).toString('hex');
 
     try {
-      return await OrderbookApi.auth.login(email, passwordHash);
+      return reply(await OrderbookApi.auth.login(email, passwordHash));
     } catch (err) {
-      throw new Error(err.response.data.error);
+      if (err.response) {
+        return reply(err.response.data).code(400);
+      } else {
+        throw new Error(err);
+      }
     }
   }
 }

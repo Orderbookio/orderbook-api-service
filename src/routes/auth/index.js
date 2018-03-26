@@ -25,11 +25,11 @@ module.exports = [
 /**
  *
  */
-async function handleLogin(request, h) {
+async function handleLogin(request, reply) {
   try {
-    return await LoginHandler.handle(request, h);
+    await LoginHandler.handle(request, reply);
   } catch (err) {
     LOG.warn(`/login error`, err);
-    return h.response({ error: 'Server Error' }).code(500);
+    reply({ error: 'Server Error' }).code(500);
   }
 }
