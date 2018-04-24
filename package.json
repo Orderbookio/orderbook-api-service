@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --recursive --exit",
+    "test": "IS_RUNNING_TEST=true node mochaRunner.js",
     "dev": "NODE_ENV=dev node src/server.js"
   },
   "repository": {
@@ -19,11 +19,14 @@
   "homepage": "https://github.com/Orderbookio/orderbook-api-service#readme",
   "dependencies": {
     "axios": "0.18.0",
+    "bcrypt": "^2.0.1",
     "ethereumjs-util": "5.1.5",
     "hapi": "16.6.2",
+    "hapi-auth-basic": "4.2.0",
     "hapi-swagger": "7.9.0",
     "inert": "4.2.1",
     "joi": "13.1.2",
+    "localStorage": "^1.0.3",
     "log4js": "2.5.3",
     "vision": "4.1.1"
   },
