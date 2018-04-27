@@ -2,11 +2,9 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 describe('test AuthService', () => {
-
   const AuthService = require('./../../src/services/AuthService');
   const LocalStorage = require('./../../src/services/LocalStorage');
   const OrderbookApi = require('./../../src/api/OrderbookApi');
-
 
   /**
    * Stubs
@@ -31,8 +29,8 @@ describe('test AuthService', () => {
   beforeEach(() => {
     stub(sandbox, OrderbookApi.auth, 'login').resolves({ token: JWTTokenFromOB, container: {} });
     stub(sandbox, OrderbookApi.auth, 'isAuthenticated').resolves({ auth: true });
-    stub(sandbox, LocalStorage, 'getTokens').resolves(TOKENS);
-    stub(sandbox, LocalStorage, 'setTokens').resolves();
+    stub(sandbox, LocalStorage, 'getAuthData').resolves(TOKENS);
+    stub(sandbox, LocalStorage, 'setAuthData').resolves();
     stub(sandbox, LocalStorage, 'getContainers').resolves({});
     stub(sandbox, LocalStorage, 'setContainers').resolves();
   });
@@ -43,21 +41,21 @@ describe('test AuthService', () => {
 
   it(`should make a successful call`, async () => {
     // act
-    await AuthService.getJWTToken(CREDENTIALS);
+    await AuthService.getAuthData(CREDENTIALS);
   });
 
   it(`getJWTToken should return JWT token form LocalStorage`, async () => {
     // act
-    const token = await AuthService.getJWTToken(CREDENTIALS);
+    const { token } = await AuthService.getAuthData(CREDENTIALS);
     expect(token).to.be.equal(JWTTokenInLocalStorage);
   });
 
   it(`getJWTToken should return JWT token form Orderbook`, async () => {
     //prepare data
-    stub(sandbox, LocalStorage, 'getTokens').resolves({});
+    stub(sandbox, LocalStorage, 'getAuthData').resolves({});
 
     // act
-    const token = await AuthService.getJWTToken(CREDENTIALS);
+    const { token } = await AuthService.getAuthData(CREDENTIALS);
 
     shouldNotBeCalled(OrderbookApi.auth.isAuthenticated);
     expect(token).to.be.equal(JWTTokenFromOB);

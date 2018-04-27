@@ -8,6 +8,7 @@ const HapiSwagger = require('hapi-swagger');
 const log4js = require('log4js');
 const Bcrypt = require('bcrypt');
 
+const Application = require('./Application');
 const config = require('./config/index');
 const Pack = require('../package');
 const users = config.users;
@@ -52,7 +53,7 @@ server.register([
       }
 
       const isValid = await Bcrypt.compare(password, user.authPassword);
-      const credentials = { email: user.email, OBPassword: user.OBPassword };
+      const credentials = { email: user.email, OBPassword: user.OBPassword, proxyAddress: user.proxyAddress, userContractAddress: user.userContractAddress };
 
       return callback(null, isValid, credentials);
     } });
@@ -68,9 +69,11 @@ server.register([
 
 });
 
-server.start((err) => {
+server.start(async (err) => {
   if (!err) {
+    await Application.init();
     console.log(`Server running at: ${server.info.uri}`);
+    console.log(`Server documentation at: ${server.info.uri}/documentation`);
   }
 });
 

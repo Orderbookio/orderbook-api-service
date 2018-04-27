@@ -5,10 +5,10 @@ const OrderbookApi = require('./../../api/OrderbookApi');
 
 class GetUserBalances {
   async handle(request, reply) {
-    const authToken = await AuthService.getJWTToken(request.auth.credentials);
+    const { token } = await AuthService.getAuthData(request.auth.credentials);
 
     try {
-      return reply(await OrderbookApi.account.getBalances(authToken));
+      return reply(await OrderbookApi.account.getBalances(token));
     } catch (err) {
       LOG.error(`Get user balances error: `, err);
       if (err.response) {
