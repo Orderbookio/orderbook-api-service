@@ -9,6 +9,15 @@ const Signer = require('./Signer');
 const Provider = require('./Provider');
 const web3 = Provider.web3;
 
+const txTypes = {
+  APPROVE: 'approve'
+};
+
+const txStatus = {
+  PENDING: 'PENDING',
+  DONE: 'DONE',
+};
+
 
 const TxUtil = {
   approve(authToken, assetSymbol, contractAddress, privateKey, nonce) {
@@ -35,6 +44,29 @@ const TxUtil = {
 
       return Promise.resolve();
     });
+  },
+
+  async isNeedApprove(token, email, asset) {
+    const { address: assetAddress } = asset;
+
+    let approveTxs = LocalStorage.getApproveTxs(email);
+
+    if (!approveTxs) {
+      approveTxs = await OrderbookApi.txs.getTransactionsByTypes(token, [txTypes.APPROVE]);
+      LocalStorage.setApproveTxs(email, approveTxs);
+    }
+    let isNeedApprove = true;
+
+    approveTxs.forEach((tx) => {
+      if (tx.status === txStatus.DONE) {
+        const options = JSON.parse(tx.options);
+        if (assetAddress === options.assetAddress) {
+          isNeedApprove = false;
+        }
+      }
+    });
+
+    return isNeedApprove;
   }
 };
 

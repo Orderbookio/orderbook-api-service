@@ -15,21 +15,13 @@ const methods = {
   SELL: 'sell'
 };
 
-const txTypes = {
-  APPROVE: 'approve'
-};
-
-const txStatus = {
-  PENDING: 'PENDING',
-  DONE: 'DONE',
-};
 
 class CreateOrderHandler {
   async handle(request, reply) {
     const { type, market, amount, price } = request.payload;
     const [, baseCCY, counterCCY] = /(\S*)-(\S*)/g.exec(market);
 
-    const { token, privateKey, userContractAddress } = await AuthService.getAuthData(request.auth.credentials);
+    const { token, privateKey, userContractAddress, email } = await AuthService.getAuthData(request.auth.credentials);
 
     let method,
       assetSymbol;
@@ -50,21 +42,8 @@ class CreateOrderHandler {
       return reply({ 'error': `Invalid market, ${assetSymbol} not found`}).code(400);
     }
 
-    const { address: assetAddress } = asset;
-
-    const approveTxs = await OrderbookApi.txs.getTransactionsByTypes(token, [txTypes.APPROVE]);
-    let isNeedApprove = true;
-
-    approveTxs.forEach((tx) => {
-      if (tx.status === txStatus.DONE) {
-        const options = JSON.parse(tx.options);
-        if (assetAddress === options.assetAddress) {
-          isNeedApprove = false;
-        }
-      }
-    });
-
-    if (isNeedApprove) {
+    // check and send approve tx
+    if (TxUtil.isNeedApprove(token, email, asset)) {
       const nonce = await OrderbookApi.account.getNonce(token);
       await TxUtil.approve(token, assetSymbol, userContractAddress, privateKey, nonce);
     }

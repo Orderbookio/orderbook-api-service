@@ -10,6 +10,8 @@ class AuthService {
     const authData = LocalStorage.getAuthData(email);
     let { token, privateKey } = authData;
 
+    const res = { token, privateKey, proxyAddress, userContractAddress, email };
+
     let isAuthenticated = false;
     if (token) {
       const { auth } = await OrderbookApi.auth.isAuthenticated(token);
@@ -17,13 +19,13 @@ class AuthService {
     }
 
     if (isAuthenticated) {
-      return { token, privateKey, proxyAddress, userContractAddress }
+      return res;
     }
 
     const passwordHash = ethUtils.sha3(OBPassword).toString('hex');
     const data = await OrderbookApi.auth.login(email, passwordHash);
-    const  container = data.container;
-    token = data.token;
+    const container = data.container;
+    res.token = data.token;
 
     const containers = LocalStorage.getContainers();
     if (!containers[email]) {
@@ -31,11 +33,11 @@ class AuthService {
       await LocalStorage.setContainers(containers);
     }
 
-    privateKey = Encryptor.decrypt(container, OBPassword);
+    res.privateKey = Encryptor.decrypt(container, OBPassword);
 
-    LocalStorage.setAuthData(email, { token, privateKey });
+    LocalStorage.setAuthData(email, res);
 
-    return { token, privateKey, proxyAddress, userContractAddress };
+    return res;
   }
 }
 
