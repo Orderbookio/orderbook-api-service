@@ -45,10 +45,9 @@ class CreateOrderHandler {
     }
 
     const assets = await LocalStorage.getAssets();
-
     const asset = assets[assetSymbol];
     if (!asset) {
-      //todo err
+      return reply({ 'error': `Invalid market, ${assetSymbol} not found`}).code(400);
     }
 
     const { address: assetAddress } = asset;
@@ -90,9 +89,9 @@ class CreateOrderHandler {
       privateKey
     );
 
-    await OrderbookApi.orders.create(token, method, market, formattedPrice.toString(10), newOrderRawAmount.toString(10), nonce, sig, op);
+    const response = await OrderbookApi.orders.create(token, method, market, formattedPrice.toString(10), newOrderRawAmount.toString(10), nonce, sig, op);
 
-    return reply();
+    return reply(response);
   }
 }
 

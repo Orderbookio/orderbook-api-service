@@ -15,7 +15,7 @@ module.exports = [
       auth: config.auth,
       description: 'Get open orders by market name',
       notes: 'Returns a todo item by the id passed in the path',
-      tags: ['api'],
+      tags: ['api']
     },
     handler: getOpenOrders
   },
@@ -27,12 +27,14 @@ module.exports = [
       description: 'Create order',
       notes: 'Returns a todo item by the id passed in the path',
       tags: ['api'],
-      // validate: {
-      //   payload: {
-      //     email : Joi.string().required().email().description('the id for the todo item'),
-      //     password : Joi.string().required().description('the id for the todo item'),
-      //   }
-      // },
+      validate: {
+        payload: {
+          type: Joi.string().required().description('order type is required'),
+          amount: Joi.number().required().description('order amount is required'),
+          price: Joi.number().required().description('order price is required'),
+          market: Joi.string().required().description('market name is required'),
+        }
+      },
     },
     handler: createOrder
   },
@@ -43,15 +45,18 @@ module.exports = [
       auth: config.auth,
       description: 'Delete user order by id',
       notes: 'Returns a todo item by the id passed in the path',
-      tags: ['api']
+      tags: ['api'],
+      validate: {
+        payload: {
+          orderId : Joi.number().required().description('order id is required'),
+          market : Joi.string().required().description('market name is required'),
+        }
+      },
     },
     handler: cancelOrder
   }
 ];
 
-/**
- *
- */
 async function getOpenOrders(request, reply) {
   try {
     await GetOpenOrders.handle(request, reply);
@@ -61,9 +66,6 @@ async function getOpenOrders(request, reply) {
   }
 }
 
-/**
- *
- */
 async function createOrder(request, reply) {
   try {
     await CreateOrderHandler.handle(request, reply);
@@ -73,9 +75,6 @@ async function createOrder(request, reply) {
   }
 }
 
-/**
- *
- */
 async function cancelOrder(request, reply) {
   try {
     await CancelOrderHandler.handle(request, reply);

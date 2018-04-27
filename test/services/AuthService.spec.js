@@ -21,15 +21,16 @@ describe('test AuthService', () => {
   const JWTTokenInLocalStorage = 'TOKEN_FROM_LOCAL_STORAGE';
   const JWTTokenFromOB = 'TOKEN_FROM_OB';
 
-  const TOKENS = {
-    'test@mail.com': JWTTokenInLocalStorage
+  const AUTH_DATA = {
+    token: JWTTokenInLocalStorage,
+    privateKey: 'USER_PK'
   };
 
 
   beforeEach(() => {
     stub(sandbox, OrderbookApi.auth, 'login').resolves({ token: JWTTokenFromOB, container: {} });
     stub(sandbox, OrderbookApi.auth, 'isAuthenticated').resolves({ auth: true });
-    stub(sandbox, LocalStorage, 'getAuthData').resolves(TOKENS);
+    stub(sandbox, LocalStorage, 'getAuthData').returns(AUTH_DATA);
     stub(sandbox, LocalStorage, 'setAuthData').resolves();
     stub(sandbox, LocalStorage, 'getContainers').resolves({});
     stub(sandbox, LocalStorage, 'setContainers').resolves();

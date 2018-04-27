@@ -35,7 +35,6 @@ const TxUtil = {
 
       return Promise.resolve();
     });
-
   }
 };
 

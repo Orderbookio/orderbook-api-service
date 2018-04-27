@@ -1,4 +1,3 @@
-const Joi = require('joi');
 const LOG = require('log4js').getLogger('index.js');
 const config = require('./../../config/index');
 
@@ -41,9 +40,6 @@ module.exports = [
   }
 ];
 
-/**
- *
- */
 async function getUserBalances(request, reply) {
   try {
     await GetUserBalancesHandler.handle(request, reply);
@@ -53,9 +49,6 @@ async function getUserBalances(request, reply) {
   }
 }
 
-/**
- *
- */
 async function getMarketNames(request, reply) {
   try {
     await GetMarketsHandler.handle(request, reply);
@@ -65,10 +58,6 @@ async function getMarketNames(request, reply) {
   }
 }
 
-
-/**
- *
- */
 async function getTrades(request, reply) {
   try {
     await GetTradesHandler.handle(request, reply);
@@ -76,8 +65,4 @@ async function getTrades(request, reply) {
     LOG.warn(`/trades error`, err);
     reply({ error: 'Server Error' }).code(500);
   }
-}
-
-async function mocked(request, reply) {
-
 }

@@ -1,8 +1,8 @@
 const OrderbookApi = require('./../../api/OrderbookApi');
 
+
 class GetMarketsHandler {
   async handle(request, reply) {
-
     const markets = await OrderbookApi.orderbook.getMarkets();
 
     const marketNames = markets.map((m) => {
