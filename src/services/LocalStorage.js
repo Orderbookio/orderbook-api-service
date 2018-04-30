@@ -56,11 +56,11 @@ class LocalStorage {
   getApproveTxs(email) {
     const data = this.storage[this.items.APPROVE_TXS];
     if (!data) {
-      return {};
+      return [];
     }
     const dataByEmail = data[email];
     if (!dataByEmail) {
-      return {};
+      return [];
     }
     return dataByEmail;
   }

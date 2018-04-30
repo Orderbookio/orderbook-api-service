@@ -4,6 +4,7 @@ const web3 = Provider.web3;
 
 const { ecsign, addHexPrefix, stripHexPrefix, toBuffer: toBuff } = ethUtil;
 
+
 function _ecsign(hash, privateKey) {
   return ecsign(toBuffer(hash), toBuffer(privateKey));
 }

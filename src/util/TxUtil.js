@@ -38,7 +38,6 @@ const TxUtil = {
         const sig = Signer.sign(op, privateKey);
 
         const hash = await OrderbookApi.account.approve(authToken, assetSymbol, assetContract.address, nonce, op, sig);
-
         return hash;
       }
 
@@ -51,7 +50,7 @@ const TxUtil = {
 
     let approveTxs = LocalStorage.getApproveTxs(email);
 
-    if (!approveTxs) {
+    if (approveTxs.length === 0) {
       approveTxs = await OrderbookApi.txs.getTransactionsByTypes(token, [txTypes.APPROVE]);
       LocalStorage.setApproveTxs(email, approveTxs);
     }

@@ -1,5 +1,3 @@
-const LOG = require('log4js').getLogger('GetOpenOrders.js');
-
 const ContractsUtil = require('./../../util/ContractsUtil');
 
 const OrderbookApi = require('./../../api/OrderbookApi');

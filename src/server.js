@@ -13,6 +13,7 @@ const config = require('./config/index');
 const Pack = require('../package');
 const users = config.users;
 
+
 log4js.configure(config.log4jsConfig);
 
 const server = new Hapi.Server();

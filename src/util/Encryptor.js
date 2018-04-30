@@ -1,9 +1,12 @@
+const LOG = require('log4js').getLogger('Encryptor.js');
+
 const Ambisafe = require('ambisafe-client-javascript');
+
 
 const Encryptor = {
   encrypt(privateKey, password) {
     if (!password) {
-      console.log('Warning! Encryption with empty password.');
+      LOG.warn(`Warning! Encryption with empty password.`);
     }
 
     const account = Ambisafe.fromPrivateKey(privateKey, password);
@@ -12,7 +15,7 @@ const Encryptor = {
 
   decrypt(encryptedContainer, password) {
     if (!password) {
-      console.log('Warning! Decryption with empty password.');
+      LOG.warn(`Warning! Decryption with empty password.`);
     }
 
     const account = new Ambisafe.Account(encryptedContainer, password);

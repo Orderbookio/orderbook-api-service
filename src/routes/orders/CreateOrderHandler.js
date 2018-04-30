@@ -36,7 +36,7 @@ class CreateOrderHandler {
       return reply({ 'error': 'Invalid order type'}).code(400);
     }
 
-    const assets = await LocalStorage.getAssets();
+    const assets = LocalStorage.getAssets();
     const asset = assets[assetSymbol];
     if (!asset) {
       return reply({ 'error': `Invalid market, ${assetSymbol} not found`}).code(400);

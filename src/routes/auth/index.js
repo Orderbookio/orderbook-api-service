@@ -1,8 +1,8 @@
-const Joi = require('joi');
 const LOG = require('log4js').getLogger('auth/index.js');
 const config = require('./../../config/index');
 
 const LoginHandler = require('./LoginHandler');
+
 
 module.exports = [
   {
@@ -10,23 +10,14 @@ module.exports = [
     method: 'POST',
     config: {
       auth: config.auth,
-      description: 'Get todo',
-      notes: 'Returns a todo item by the id passed in the path',
-      tags: ['api'],
-      // validate: {
-      //   payload: {
-      //     email : Joi.string().required().email().description('the id for the todo item'),
-      //     password : Joi.string().required().description('the id for the todo item'),
-      //   }
-      // },
+      description: 'Login to orderbook',
+      notes: 'Returns JWT token and user container for singing transactions.',
+      tags: ['api']
     },
     handler: handleLogin
   }
 ];
 
-/**
- *
- */
 async function handleLogin(request, reply) {
   try {
     await LoginHandler.handle(request, reply);

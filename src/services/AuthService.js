@@ -3,6 +3,7 @@ const LocalStorage = require('./LocalStorage');
 const OrderbookApi = require('./../api/OrderbookApi');
 const Encryptor = require('./../util/Encryptor');
 
+
 class AuthService {
   async getAuthData(credentials) {
     const { email, OBPassword, proxyAddress, userContractAddress } = credentials;

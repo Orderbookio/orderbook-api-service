@@ -1,3 +1,5 @@
+const LOG = require('log4js').getLogger('ContractsUtil.js');
+
 const Promise = require( 'bluebird');
 const BigNumber = require('bignumber.js');
 
@@ -26,7 +28,7 @@ const ContractsUtil = {
   toRawAmount(amount, symbol) {
     const asset = this.getAsset(symbol);
     if (!asset) {
-      console.log('Symbol ${symbol} not registered.');
+      LOG.warn(`Symbol ${symbol} not registered.`);
       return amount;
     }
     if (!amount.isBigNumber) {
@@ -39,7 +41,7 @@ const ContractsUtil = {
   toRealAmount(rawAmount, symbol) {
     const asset = this.getAsset(symbol);
     if (!asset) {
-      console.log('Symbol ${symbol} not registered.');
+      LOG.warn(`Symbol ${symbol} not registered.`);
       return rawAmount;
     }
     if (!rawAmount.isBigNumber) {

@@ -1,5 +1,3 @@
-const LOG = require('log4js').getLogger('CancelOrderHandler.js');
-
 const Signer = require('../../util/Signer');
 const OrderbookApi = require('./../../api/OrderbookApi');
 const LocalStorage = require('./../../services/LocalStorage');
