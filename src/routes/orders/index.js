@@ -14,7 +14,17 @@ module.exports = [
     config: {
       auth: config.auth,
       description: 'Get open orders by market name',
-      notes: 'Returns a todo item by the id passed in the path',
+      notes: 'Returns user buy and sell orders for specified market, example {\n' +
+      '    "buy": [],\n' +
+      '    "sell": [\n' +
+      '        {\n' +
+      '            "id": "10",\n' +
+      '            "price": "0.5",\n' +
+      '            "amount": "3",\n' +
+      '            "openAmount": "3"\n' +
+      '        }\n' +
+      '    ]\n' +
+      '}',
       tags: ['api']
     },
     handler: getOpenOrders
@@ -25,7 +35,7 @@ module.exports = [
     config: {
       auth: config.auth,
       description: 'Create order',
-      notes: 'Returns a todo item by the id passed in the path',
+      notes: 'Returns hash of created order',
       tags: ['api'],
       validate: {
         payload: {
@@ -44,7 +54,7 @@ module.exports = [
     config: {
       auth: config.auth,
       description: 'Delete user order by id',
-      notes: 'Returns a todo item by the id passed in the path',
+      notes: 'Returns hash of deleted order',
       tags: ['api'],
       validate: {
         payload: {

@@ -54,7 +54,12 @@ server.register([
       }
 
       const isValid = await Bcrypt.compare(password, user.authPassword);
-      const credentials = { email: user.email, OBPassword: user.OBPassword, proxyAddress: user.proxyAddress, userContractAddress: user.userContractAddress };
+      const credentials = {
+        email: user.email,
+        OBPassword: user.OBPassword,
+        proxyAddress: user.proxyAddress,
+        userContractAddress: user.userContractAddress
+      };
 
       return callback(null, isValid, credentials);
     } });
@@ -68,6 +73,23 @@ server.register([
     server.route(require(path.join(routesPath, file)));
   });
 
+});
+
+server.ext('onRequest', function (request, reply) {
+
+  if (!eval(config.isAuthEnabled)) {
+
+    const user = users[0];
+    const credentials = {
+      email: user.email,
+      OBPassword: user.OBPassword,
+      proxyAddress: user.proxyAddress,
+      userContractAddress: user.userContractAddress
+    };
+
+    request.auth = Object.assign(request.auth, { credentials });
+  }
+  return reply.continue();
 });
 
 server.start(async (err) => {

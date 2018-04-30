@@ -13,7 +13,7 @@ module.exports = [
     config: {
       auth: config.auth,
       description: 'Get user balances',
-      notes: 'Returns a todo item by the id passed in the path',
+      notes: 'Get user balance by all the assets',
       tags: ['api']
     },
     handler: getUserBalances
@@ -23,7 +23,10 @@ module.exports = [
     method: 'GET',
     config: {
       description: 'Get available market names',
-      notes: 'Returns a todo item by the id passed in the path',
+      notes: 'Returns an array of market names, for example  [\n' +
+      '    "BASE-MONEY",\n' +
+      '    "BASE-DOLLAR"\n' +
+      ']',
       tags: ['api']
     },
     handler: getMarketNames
@@ -33,7 +36,7 @@ module.exports = [
     method: 'GET',
     config: {
       description: 'Get trades by market name',
-      notes: 'Returns a todo item by the id passed in the path',
+      notes: 'Returns trades array by market name',
       tags: ['api']
     },
     handler: getTrades

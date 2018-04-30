@@ -9,10 +9,7 @@ module.exports = [
     path: '/login',
     method: 'POST',
     config: {
-      auth: config.auth,
-      description: 'Login to orderbook',
-      notes: 'Returns JWT token and user container for singing transactions.',
-      tags: ['api']
+      auth: config.auth
     },
     handler: handleLogin
   }
