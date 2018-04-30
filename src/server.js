@@ -76,9 +76,7 @@ server.register([
 });
 
 server.ext('onRequest', function (request, reply) {
-
   if (!eval(config.isAuthEnabled)) {
-
     const user = users[0];
     const credentials = {
       email: user.email,

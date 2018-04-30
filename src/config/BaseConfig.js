@@ -8,7 +8,7 @@ const {
 class BaseConfig {
   constructor() {
     this.port = SERVER_PORT || 5000;
-    this.orderbookUrl = 'http://localhost:3000' || ORDERBOOK_URL;
+    this.orderbookUrl = ORDERBOOK_URL || 'http://localhost:3000';
     this.isAuthEnabled = IS_AUTH_ENABLED || false;
     this.auth = IS_AUTH_ENABLED ? 'simple' : false;
     this.users = USERS ? JSON.parse(USERS) : [];

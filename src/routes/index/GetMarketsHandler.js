@@ -5,14 +5,15 @@ class GetMarketsHandler {
   async handle(request, reply) {
     const markets = await OrderbookApi.orderbook.getMarkets();
 
-    const marketNames = markets.map((m) => {
+    const result = [];
+    markets.forEach((m) => {
       const opt = m.options;
       if (opt.visible) {
-        return m.name;
+        result.push(m.name);
       }
     });
 
-    return reply(marketNames);
+    return reply(result);
   }
 }
 
