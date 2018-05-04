@@ -37,7 +37,7 @@ const TxUtil = {
         const op = web3.sha3(`0x${assetContractAddress}${formattedValue}${data}${contractAddress.substr(2)}${formattedNonce}`, { encoding: 'hex' });
         const sig = Signer.sign(op, privateKey);
 
-        const hash = await OrderbookApi.account.approve(authToken, assetSymbol, assetContract.address, nonce, op, sig);
+        const hash = await OrderbookApi.account.approve(authToken, assetSymbol, assetContract.address.substr(2), nonce, op, sig);
         return hash;
       }
 
