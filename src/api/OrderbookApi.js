@@ -65,6 +65,9 @@ module.exports = {
     getOrdersByProxy(authToken, market, address) {
       return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/orders/${address}`, getAuthHeader(authToken)).then(res => res.data);
     },
+    getOrderbook(market) {
+      return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}`).then(res => res.data);
+    },
   },
   txs: {
     getTransactionsByTypes(authToken, types) {

@@ -93,6 +93,7 @@ server.ext('onRequest', function (request, reply) {
 server.start(async (err) => {
   if (!err) {
     await Application.init();
+    console.log(`Orderbook URL : ${config.orderbookUrl}`);
     console.log(`Server running at: ${server.info.uri}`);
     console.log(`Server documentation at: ${server.info.uri}/documentation`);
   }

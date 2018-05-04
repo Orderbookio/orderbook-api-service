@@ -5,6 +5,7 @@ const config = require('./../../config/index');
 const CreateOrderHandler = require('./CreateOrderHandler');
 const CancelOrderHandler = require('./CancelOrderHandler');
 const GetOpenOrders = require('./GetOpenOrders');
+const GetOrderbook = require('./GetOrderbook');
 
 
 module.exports = [
@@ -13,7 +14,7 @@ module.exports = [
     method: 'GET',
     config: {
       auth: config.auth,
-      description: 'Get open orders by market name',
+      description: 'Get user open orders by market name',
       notes: 'Returns user buy and sell orders for specified market, example {\n' +
       '    "buy": [],\n' +
       '    "sell": [\n' +
@@ -64,7 +65,26 @@ module.exports = [
       },
     },
     handler: cancelOrder
-  }
+  },
+  {
+    path: '/orderbook/{market}',
+    method: 'GET',
+    config: {
+      auth: config.auth,
+      description: 'Get open orders by market name',
+      notes: 'Returns user buy and sell orders for specified market, example {\n' +
+      '    "buy": [],\n' +
+      '    "sell": [\n' +
+      '        {\n' +
+      '            "price": "0.5",\n' +
+      '            "amount": "3",\n' +
+      '        }\n' +
+      '    ]\n' +
+      '}',
+      tags: ['api']
+    },
+    handler: getOrderbook
+  },
 ];
 
 async function getOpenOrders(request, reply) {
@@ -90,6 +110,15 @@ async function cancelOrder(request, reply) {
     await CancelOrderHandler.handle(request, reply);
   } catch (err) {
     LOG.warn(`DELETE /orders error`, err);
+    reply({ error: 'Server Error' }).code(500);
+  }
+}
+
+async function getOrderbook(request, reply) {
+  try {
+    await GetOrderbook.handle(request, reply);
+  } catch (err) {
+    LOG.warn(`GET /orederbook/{market} error`, err);
     reply({ error: 'Server Error' }).code(500);
   }
 }
