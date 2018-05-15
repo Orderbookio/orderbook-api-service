@@ -1,4 +1,3 @@
-
 module.exports = {
   init(sandbox) {
     const code = sandbox.stub();

@@ -47,22 +47,24 @@ server.register([
   }
 
   if (config.isAuthEnabled) {
-    server.auth.strategy('simple', 'basic', { validateFunc: async (request, email, password, callback) => {
-      const user = users.find((u) => u.email === email);
-      if (!user) {
-        return callback(null, false, {});
+    server.auth.strategy('simple', 'basic', {
+      validateFunc: async (request, email, password, callback) => {
+        const user = users.find((u) => u.email === email);
+        if (!user) {
+          return callback(null, false, {});
+        }
+
+        const isValid = await Bcrypt.compare(password, user.authPassword);
+        const credentials = {
+          email: user.email,
+          OBPassword: user.OBPassword,
+          proxyAddress: user.proxyAddress,
+          userContractAddress: user.userContractAddress
+        };
+
+        return callback(null, isValid, credentials);
       }
-
-      const isValid = await Bcrypt.compare(password, user.authPassword);
-      const credentials = {
-        email: user.email,
-        OBPassword: user.OBPassword,
-        proxyAddress: user.proxyAddress,
-        userContractAddress: user.userContractAddress
-      };
-
-      return callback(null, isValid, credentials);
-    } });
+    });
   }
 
   /**
@@ -73,35 +75,38 @@ server.register([
     server.route(require(path.join(routesPath, file)));
   });
 
+
+  server.ext('onRequest', (request, reply) =>{
+    if (!config.isAuthEnabled) {
+      const user = users[0];
+      const credentials = {
+        email: user.email,
+        OBPassword: user.OBPassword,
+        proxyAddress: user.proxyAddress,
+        userContractAddress: user.userContractAddress
+      };
+
+      request.auth = Object.assign(request.auth, { credentials });
+    }
+    return reply.continue();
+  });
+
+  //Start server
+  server.start(async (err) => {
+    if (!err) {
+      await Application.init();
+      console.log(`Orderbook URL: ${config.orderbookUrl}`);
+      console.log(`Server running at: ${server.info.uri}`);
+      console.log(`Server documentation at: ${server.info.uri}/documentation`);
+    }
+  });
 });
 
-server.ext('onRequest', function (request, reply) {
-  if (!eval(config.isAuthEnabled)) {
-    const user = users[0];
-    const credentials = {
-      email: user.email,
-      OBPassword: user.OBPassword,
-      proxyAddress: user.proxyAddress,
-      userContractAddress: user.userContractAddress
-    };
-
-    request.auth = Object.assign(request.auth, { credentials });
-  }
-  return reply.continue();
-});
-
-server.start(async (err) => {
-  if (!err) {
-    await Application.init();
-    console.log(`Orderbook URL : ${config.orderbookUrl}`);
-    console.log(`Server running at: ${server.info.uri}`);
-    console.log(`Server documentation at: ${server.info.uri}/documentation`);
-  }
-});
 
 process.on('unhandledRejection', (err) => {
   console.log(err);
   process.exit(1);
 });
+
 
 module.exports = server;

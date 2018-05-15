@@ -2,7 +2,7 @@ const sinon = require('sinon');
 
 describe('endpoint test | GET /trades/{market}', () => {
 
-  const GetTradesHandler = require('./../../../src/routes/index/GetTradesHandler');
+  const GetTradesHandler = require('../../../src/routes/common/GetTradesHandler');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
 
 

@@ -9,4 +9,5 @@ class GetUserBalances {
   }
 }
 
+
 module.exports = new GetUserBalances();

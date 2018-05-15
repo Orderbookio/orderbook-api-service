@@ -16,4 +16,5 @@ class GetTradesHandler {
   }
 }
 
+
 module.exports = new GetTradesHandler();

@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 
+
 module.exports = {
   stub(sandbox, obj, functionName) {
     // check if already wrapped

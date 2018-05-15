@@ -17,4 +17,5 @@ class GetMarketsHandler {
   }
 }
 
+
 module.exports = new GetMarketsHandler();

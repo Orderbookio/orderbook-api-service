@@ -69,4 +69,5 @@ const TxUtil = {
   }
 };
 
+
 module.exports = TxUtil;

@@ -16,11 +16,7 @@ class LocalStorage {
     if (!data) {
       return {};
     }
-    const dataByEmail = data[email];
-    if (!dataByEmail) {
-      return {};
-    }
-    return dataByEmail;
+    return data[email] || {};
   }
 
   setAuthData(email, authData) {
@@ -37,20 +33,21 @@ class LocalStorage {
     this.storage[this.items.CONTAINERS] = containers;
   }
 
-  setOBContract(contract) {
-    this.storage[this.items.CONTRACT] = contract;
-  }
-
   getOBContract() {
     return this.storage[this.items.CONTRACT] || {};
   }
 
-  setAssets(assets) {
-    this.storage[this.items.ASSETS] = assets;
+  setOBContract(contract) {
+    this.storage[this.items.CONTRACT] = contract;
   }
+
 
   getAssets() {
     return this.storage[this.items.ASSETS] || {};
+  }
+
+  setAssets(assets) {
+    this.storage[this.items.ASSETS] = assets;
   }
 
   getApproveTxs(email) {
@@ -58,11 +55,7 @@ class LocalStorage {
     if (!data) {
       return [];
     }
-    const dataByEmail = data[email];
-    if (!dataByEmail) {
-      return [];
-    }
-    return dataByEmail;
+    return data[email] || [];
   }
 
   setApproveTxs(email, txs) {
@@ -71,5 +64,6 @@ class LocalStorage {
     this.storage[this.items.APPROVE_TXS] = data;
   }
 }
+
 
 module.exports = new LocalStorage();

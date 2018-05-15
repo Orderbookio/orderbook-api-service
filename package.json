@@ -29,7 +29,6 @@
     "hapi-swagger": "7.9.0",
     "inert": "4.2.1",
     "joi": "13.1.2",
-    "localStorage": "^1.0.3",
     "log4js": "2.5.3",
     "vision": "4.1.1",
     "web3": "0.18.2"

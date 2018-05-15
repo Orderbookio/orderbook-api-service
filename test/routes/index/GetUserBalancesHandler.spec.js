@@ -2,7 +2,7 @@ const sinon = require('sinon');
 
 describe('endpoint test | GET /balances', () => {
 
-  const GetUserBalancesHandler = require('./../../../src/routes/index/GetUserBalancesHandler');
+  const GetUserBalancesHandler = require('../../../src/routes/common/GetUserBalancesHandler');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
   const AuthService = require('./../../../src/services/AuthService');
 

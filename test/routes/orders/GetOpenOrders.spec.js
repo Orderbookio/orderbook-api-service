@@ -2,7 +2,7 @@ const sinon = require('sinon');
 
 describe('endpoint test | GET /orders/{market}', () => {
 
-  const GetOpenOrders = require('./../../../src/routes/orders/GetOpenOrders');
+  const GetOpenOrders = require('../../../src/routes/orders/GetUserOpenOrders');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
   const AuthService = require('./../../../src/services/AuthService');
 

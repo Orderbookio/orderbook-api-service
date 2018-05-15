@@ -1,4 +1,5 @@
 const ethUtils = require('ethereumjs-util');
+
 const LocalStorage = require('./LocalStorage');
 const OrderbookApi = require('./../api/OrderbookApi');
 const Encryptor = require('./../util/Encryptor');
@@ -24,7 +25,15 @@ class AuthService {
     }
 
     const passwordHash = ethUtils.sha3(OBPassword).toString('hex');
-    const data = await OrderbookApi.auth.login(email, passwordHash);
+
+    let data;
+    try {
+      data = await OrderbookApi.auth.login(email, passwordHash);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+
     const container = data.container;
     res.token = data.token;
 
@@ -41,5 +50,6 @@ class AuthService {
     return res;
   }
 }
+
 
 module.exports = new AuthService();

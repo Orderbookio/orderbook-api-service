@@ -1,4 +1,4 @@
-const LOG = require('log4js').getLogger('GetUserBalances.js');
+const LOG = require('log4js').getLogger('Application.js');
 const OrderbookApi = require('./api/OrderbookApi');
 const LocalStorage = require('./services/LocalStorage');
 const Provider = require('./util/Provider');
@@ -19,11 +19,13 @@ const Application = {
       abi: obContract.abi,
       contract,
     });
-    LOG.info(`Orderbook contract initiated`);
+
+    LOG.info(`Orderbook contract was initiated`);
 
     const assets = await OrderbookApi.assets.getAssets();
     await LocalStorage.setAssets(assets);
-    LOG.info(`Assets initiated`);
+
+    LOG.info(`Assets were initiated`);
   }
 };
 module.exports = Application;

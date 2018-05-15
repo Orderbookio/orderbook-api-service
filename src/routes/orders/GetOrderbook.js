@@ -29,4 +29,5 @@ class GetOpenOrders {
   }
 }
 
+
 module.exports = new GetOpenOrders();

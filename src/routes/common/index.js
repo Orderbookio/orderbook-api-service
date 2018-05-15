@@ -1,5 +1,6 @@
-const LOG = require('log4js').getLogger('index.js');
+const LOG = require('log4js').getLogger('common/index.js');
 const config = require('./../../config/index');
+const { handle } = require('./../../util/RouteHandler');
 
 const GetUserBalancesHandler = require('./GetUserBalancesHandler');
 const GetMarketsHandler = require('./GetMarketsHandler');
@@ -16,7 +17,7 @@ module.exports = [
       notes: 'Get user balance by all the assets',
       tags: ['api']
     },
-    handler: getUserBalances
+    handler: (rt, rp) => handle(rt, rp, GetUserBalancesHandler.handle, LOG, 'GET /balances error')
   },
   {
     path: '/markets',
@@ -29,7 +30,7 @@ module.exports = [
       ']',
       tags: ['api']
     },
-    handler: getMarketNames
+    handler: (rt, rp) => handle(rt, rp, GetMarketsHandler.handle, LOG, 'GET /markets error')
   },
   {
     path: '/trades/{market}',
@@ -39,33 +40,6 @@ module.exports = [
       notes: 'Returns trades array by market name',
       tags: ['api']
     },
-    handler: getTrades
+    handler: (rt, rp) => handle(rt, rp, GetTradesHandler.handle, LOG, 'GET /trades error')
   }
 ];
-
-async function getUserBalances(request, reply) {
-  try {
-    await GetUserBalancesHandler.handle(request, reply);
-  } catch (err) {
-    LOG.warn(`/balances error`, err);
-    reply({ error: 'Server Error' }).code(500);
-  }
-}
-
-async function getMarketNames(request, reply) {
-  try {
-    await GetMarketsHandler.handle(request, reply);
-  } catch (err) {
-    LOG.warn(`/markets error`, err);
-    reply({ error: 'Server Error' }).code(500);
-  }
-}
-
-async function getTrades(request, reply) {
-  try {
-    await GetTradesHandler.handle(request, reply);
-  } catch (err) {
-    LOG.warn(`/trades error`, err);
-    reply({ error: 'Server Error' }).code(500);
-  }
-}

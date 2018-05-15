@@ -5,4 +5,5 @@ const Provider = {
   web3
 };
 
+
 module.exports = Provider;

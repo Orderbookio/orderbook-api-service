@@ -1,10 +1,12 @@
+const LOG = require('log4js').getLogger('orders/index.js');
 const Joi = require('joi');
-const LOG = require('log4js').getLogger('auth/index.js');
+
 const config = require('./../../config/index');
+const { handle } = require('./../../util/RouteHandler');
 
 const CreateOrderHandler = require('./CreateOrderHandler');
 const CancelOrderHandler = require('./CancelOrderHandler');
-const GetOpenOrders = require('./GetOpenOrders');
+const GetUserOpenOrders = require('./GetUserOpenOrders');
 const GetOrderbook = require('./GetOrderbook');
 
 
@@ -28,7 +30,7 @@ module.exports = [
       '}',
       tags: ['api']
     },
-    handler: getOpenOrders
+    handler: (rt, rp) => handle(rt, rp, GetUserOpenOrders.handle, LOG, 'GET /orders/{market} error')
   },
   {
     path: '/orders',
@@ -47,7 +49,7 @@ module.exports = [
         }
       },
     },
-    handler: createOrder
+    handler: (rt, rp) => handle(rt, rp, CreateOrderHandler.handle, LOG, 'POST /orders error')
   },
   {
     path: '/orders',
@@ -64,7 +66,7 @@ module.exports = [
         }
       },
     },
-    handler: cancelOrder
+    handler: (rt, rp) => handle(rt, rp, CancelOrderHandler.handle, LOG, 'DELETE /orders error')
   },
   {
     path: '/orderbook/{market}',
@@ -83,42 +85,6 @@ module.exports = [
       '}',
       tags: ['api']
     },
-    handler: getOrderbook
+    handler: (rt, rp) => handle(rt, rp, GetOrderbook.handle, LOG, 'GET /orederbook/{market} error')
   },
 ];
-
-async function getOpenOrders(request, reply) {
-  try {
-    await GetOpenOrders.handle(request, reply);
-  } catch (err) {
-    LOG.warn(`GET /orders/{market} error`, err);
-    reply({ error: 'Server Error' }).code(500);
-  }
-}
-
-async function createOrder(request, reply) {
-  try {
-    await CreateOrderHandler.handle(request, reply);
-  } catch (err) {
-    LOG.warn(`POST /orders error`, err);
-    reply({ error: 'Server Error' }).code(500);
-  }
-}
-
-async function cancelOrder(request, reply) {
-  try {
-    await CancelOrderHandler.handle(request, reply);
-  } catch (err) {
-    LOG.warn(`DELETE /orders error`, err);
-    reply({ error: 'Server Error' }).code(500);
-  }
-}
-
-async function getOrderbook(request, reply) {
-  try {
-    await GetOrderbook.handle(request, reply);
-  } catch (err) {
-    LOG.warn(`GET /orederbook/{market} error`, err);
-    reply({ error: 'Server Error' }).code(500);
-  }
-}

@@ -4,7 +4,7 @@ const OrderbookApi = require('./../../api/OrderbookApi');
 const AuthService = require('./../../services/AuthService');
 
 
-class GetOpenOrders {
+class GetUserOpenOrders {
   async handle(request, reply) {
     const market = request.params.market;
 
@@ -18,18 +18,19 @@ class GetOpenOrders {
 
     buy.forEach((order) => {
       delete order.owner;
-      order.amount = order.openAmount = ContractsUtil.toRealAmount(order.amount, baseCCY);
-      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY);
+      order.amount = order.openAmount = ContractsUtil.toRealAmount(order.amount, baseCCY).toString(10);
+      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY).toString(10);
     });
 
     sell.forEach((order) => {
       delete order.owner;
-      order.amount = order.openAmount = ContractsUtil.toRealAmount(order.amount, baseCCY);
-      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY);
+      order.amount = order.openAmount = ContractsUtil.toRealAmount(order.amount, baseCCY).toString(10);
+      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY).toString(10);
     });
 
     return reply({ buy, sell });
   }
 }
 
-module.exports = new GetOpenOrders();
+
+module.exports = new GetUserOpenOrders();

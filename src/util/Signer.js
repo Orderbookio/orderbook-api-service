@@ -31,12 +31,7 @@ function prepareOperation(destination, weiValue, data, userContract, nonce, priv
 
   // format: 0x + destination + ethValue + data + ambiUserAddress + nonce
   const op = web3.sha3(
-    `0x${
-      stripHexPrefix(destination)
-      }${formattedValue
-      }${stripHexPrefix(data)
-      }${stripHexPrefix(userContract)
-      }${formattedNonce}`,
+    `0x${stripHexPrefix(destination)}${formattedValue}${stripHexPrefix(data)}${stripHexPrefix(userContract)}${formattedNonce}`,
     { encoding: 'hex' }
   );
 
@@ -44,6 +39,7 @@ function prepareOperation(destination, weiValue, data, userContract, nonce, priv
 
   return { op, sig };
 }
+
 
 module.exports = {
   sign,

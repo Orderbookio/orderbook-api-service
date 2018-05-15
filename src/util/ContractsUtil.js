@@ -60,4 +60,5 @@ const ContractsUtil = {
   },
 };
 
+
 module.exports = ContractsUtil;
