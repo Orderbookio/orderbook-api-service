@@ -11,10 +11,11 @@ const Bcrypt = require('bcrypt');
 const Application = require('./Application');
 const config = require('./config/index');
 const Pack = require('../package');
+const { handle } = require('./util/RouteHandler');
 const users = config.users;
 
-
 log4js.configure(config.log4jsConfig);
+
 
 const server = new Hapi.Server();
 
@@ -72,7 +73,20 @@ server.register([
    * */
   const routesPath = path.join(__dirname, 'routes');
   fs.readdirSync(routesPath).forEach((file) => {
-    server.route(require(path.join(routesPath, file)));
+    let routes = require(path.join(routesPath, file));
+    const LOG = require('log4js').getLogger(`routes/${file}`);
+
+    routes = routes.map((r) => {
+      const { method, path, handler, config } = r;
+      return {
+        method,
+        path,
+        config,
+        handler: (rt, rp) => handle(rt, rp, handler, LOG, `${method} ${path} error:`)
+      }
+    });
+
+    server.route(routes);
   });
 
 

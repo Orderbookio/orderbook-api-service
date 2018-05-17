@@ -17,7 +17,7 @@ module.exports = [
       notes: 'Get user balance by all the assets',
       tags: ['api']
     },
-    handler: (rt, rp) => handle(rt, rp, GetUserBalancesHandler.handle, LOG, 'GET /balances error')
+    handler: GetUserBalancesHandler.handle
   },
   {
     path: '/markets',
@@ -30,7 +30,7 @@ module.exports = [
       ']',
       tags: ['api']
     },
-    handler: (rt, rp) => handle(rt, rp, GetMarketsHandler.handle, LOG, 'GET /markets error')
+    handler: GetMarketsHandler.handle
   },
   {
     path: '/trades/{market}',
@@ -40,6 +40,6 @@ module.exports = [
       notes: 'Returns trades array by market name',
       tags: ['api']
     },
-    handler: (rt, rp) => handle(rt, rp, GetTradesHandler.handle, LOG, 'GET /trades error')
+    handler: GetTradesHandler.handle
   }
 ];

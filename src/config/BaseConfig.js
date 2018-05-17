@@ -11,7 +11,7 @@ class BaseConfig {
     this.port = SERVER_PORT || 5000;
     this.orderbookUrl = ORDERBOOK_URL || 'http://localhost:3000';
     this.isAuthEnabled = IS_AUTH_ENABLED === 'false' ? false : true;
-    this.auth = IS_AUTH_ENABLED === 'true' ? 'simple' : false;
+    this.auth = this.isAuthEnabled ? 'simple' : false;
     this.users = USERS ? JSON.parse(USERS) : [];
     this.log4jsConfig = {
       appenders: {

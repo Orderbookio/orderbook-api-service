@@ -1,3 +1,5 @@
+const LOG = require('log4js').getLogger('AuthService.js');
+
 const ethUtils = require('ethereumjs-util');
 
 const LocalStorage = require('./LocalStorage');
@@ -30,7 +32,7 @@ class AuthService {
     try {
       data = await OrderbookApi.auth.login(email, passwordHash);
     } catch (err) {
-      console.log(err);
+      LOG.warn('OB login error:', err);
       throw err;
     }
 

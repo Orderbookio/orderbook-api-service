@@ -24,9 +24,11 @@ class OrderbookApi {
       getMarkets() {
         return axios.get(`${ORDERBOOK_SERVER_URL}/markets`).then(res => res.data.markets).catch(handleOBError);
       },
+
       getTrades(market) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/trades`).then(res => res.data).catch(handleOBError);
       },
+
       getContractByVer(ver = 'latest') {
         return axios.get(`${ORDERBOOK_SERVER_URL}/contract/${ver}`).then(res => res.data).catch(handleOBError);
       }
@@ -36,6 +38,7 @@ class OrderbookApi {
       login(email, password) {
         return axios.post(`${ORDERBOOK_SERVER_URL}/login`, { email, password }).then(res => res.data).catch(handleOBError);
       },
+
       isAuthenticated(authToken) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/isAuthenticated`, getAuthHeader(authToken)).then(res => res.data).catch(handleOBError);
       },
@@ -47,14 +50,17 @@ class OrderbookApi {
           .then(res => res.data)
           .catch(handleOBError);
       },
+
       getNonce(authToken) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/nonce`, getAuthHeader(authToken)).then(res => res.data.nonce).catch(handleOBError);
       },
+
       getAllowance(authToken, assetSymbol) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/account/${encodeURIComponent(assetSymbol)}/allowance`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
+
       approve(authToken, assetSymbol, assetAddress, nonce, op, sig) {
         const { v, r, s } = sig;
         return axios.post(`${ORDERBOOK_SERVER_URL}/submit/approve`, { assetSymbol, assetAddress, nonce, op, v, r, s }, getAuthHeader(authToken))
@@ -71,6 +77,7 @@ class OrderbookApi {
           .then(res => res.data)
           .catch(handleOBError);
       },
+
       cancelOrder(authToken, market, orderId, nonce, sig, op) {
         const { v, r, s } = sig;
 
@@ -78,11 +85,13 @@ class OrderbookApi {
           .then(res => res.data)
           .catch(handleOBError);
       },
+
       getOrdersByProxy(authToken, market, address) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/orders/${address}`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
+
       getOrderbook(market) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}`)
           .then(res => res.data)

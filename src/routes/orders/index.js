@@ -30,7 +30,7 @@ module.exports = [
       '}',
       tags: ['api']
     },
-    handler: (rt, rp) => handle(rt, rp, GetUserOpenOrders.handle, LOG, 'GET /orders/{market} error')
+    handler: GetUserOpenOrders.handle
   },
   {
     path: '/orders',
@@ -49,7 +49,7 @@ module.exports = [
         }
       },
     },
-    handler: (rt, rp) => handle(rt, rp, CreateOrderHandler.handle, LOG, 'POST /orders error')
+    handler: CreateOrderHandler.handle
   },
   {
     path: '/orders',
@@ -66,7 +66,7 @@ module.exports = [
         }
       },
     },
-    handler: (rt, rp) => handle(rt, rp, CancelOrderHandler.handle, LOG, 'DELETE /orders error')
+    handler: CancelOrderHandler.handle
   },
   {
     path: '/orderbook/{market}',
@@ -85,6 +85,6 @@ module.exports = [
       '}',
       tags: ['api']
     },
-    handler: (rt, rp) => handle(rt, rp, GetOrderbook.handle, LOG, 'GET /orederbook/{market} error')
+    handler: GetOrderbook.handle
   },
 ];
