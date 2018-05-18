@@ -67,6 +67,12 @@ class OrderbookApi {
           .then(res => res.data)
           .catch(handleOBError);
       },
+
+      setAutoDeposit(authToken, ethAssetAddress, nonce, op, sig) {
+        return axios.post(`${ORDERBOOK_SERVER_URL}/submit/set-auto-deposit`, { ethAssetAddress, nonce, op, sig }, getAuthHeader(authToken))
+          .then(res => res.data)
+          .catch(handleOBError);
+      },
     };
 
     this.orders = {

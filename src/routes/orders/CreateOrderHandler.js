@@ -43,8 +43,14 @@ class CreateOrderHandler {
 
     // check and send approve tx
     if (await TxUtil.isNeedApprove(token, email, asset)) {
-      const nonce = await OrderbookApi.account.getNonce(token);
-      await TxUtil.approve(token, assetSymbol, userContractAddress, privateKey, nonce);
+      await TxUtil.approve(token, assetSymbol, userContractAddress, privateKey);
+    }
+
+    // check and send autoDeposit Tx
+    if ((type === 'buy' && baseCCY === 'ETH') || (type === 'sell' && counterCCY === 'ETH')) {
+      if (await TxUtil.isNeedAutoDeposit(token, email)) {
+        await TxUtil.setAutoDeposit(token, userContractAddress, privateKey);
+      }
     }
 
     const nonce = await OrderbookApi.account.getNonce(token);

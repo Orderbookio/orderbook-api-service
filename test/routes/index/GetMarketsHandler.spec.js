@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 
-describe('endpoint test | GET /markets', () => {
 
+describe('endpoint test | GET /markets', () => {
   const GetMarketsHandler = require('../../../src/routes/common/GetMarketsHandler');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
 

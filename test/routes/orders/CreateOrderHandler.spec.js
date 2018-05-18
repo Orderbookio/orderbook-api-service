@@ -1,8 +1,8 @@
 const sinon = require('sinon');
 const { assert } = require('chai');
 
-describe('endpoint test | POST /orders', () => {
 
+describe('endpoint test | POST /orders', () => {
   const CreateOrderHandler = require('./../../../src/routes/orders/CreateOrderHandler');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
   const AuthService = require('./../../../src/services/AuthService');
@@ -17,7 +17,6 @@ describe('endpoint test | POST /orders', () => {
   const sandbox = sinon.sandbox.create();
   const replyMock = require('../../helpers/replyMock').init(sandbox);
   const { stub, shouldBeCalled, shouldNotBeCalled  } = require('../../helpers/stubHelper');
-
 
   const REQUEST = {
     // auth
@@ -44,9 +43,15 @@ describe('endpoint test | POST /orders', () => {
     stub(sandbox, Signer, 'prepareOperation').resolves({});
     stub(sandbox, LocalStorage, 'getAssets').returns({ BASE: {} });
     stub(sandbox, TxUtil, 'isNeedApprove').returns(false);
+    stub(sandbox, TxUtil, 'isNeedAutoDeposit').returns(false);
+    stub(sandbox, TxUtil, 'setAutoDeposit').resolves();
+    stub(sandbox, TxUtil, 'approve').resolves();
     stub(sandbox, LocalStorage, 'getOBContract').returns({
       address: '0x0', contract: {
         submitSellOrder: {
+          getData: () => {}
+        },
+        submitBuyOrder: {
           getData: () => {}
         }
       }
@@ -63,8 +68,44 @@ describe('endpoint test | POST /orders', () => {
     shouldBeCalled(OrderbookApi.orders.create);
   });
 
-  it(`should return 400 error 'Invalid order type'`, async () => {
+  it(`should call approve whet it required`, async () => {
     //prepare
+    stub(sandbox, TxUtil, 'isNeedApprove').returns(true);
+
+    // act
+    await CreateOrderHandler.handle(REQUEST, replyMock);
+    shouldBeCalled(TxUtil.approve);
+    shouldBeCalled(OrderbookApi.orders.create);
+  });
+
+  it(`should call setAutoDeposit for market with ETH counter ccy`, async () => {
+    // prepare
+    stub(sandbox, TxUtil, 'isNeedAutoDeposit').returns(true);
+    const request = Object.assign({}, REQUEST);
+    request.payload.market = 'BASE-ETH';
+    request.payload.type = 'sell';
+
+    // act
+    await CreateOrderHandler.handle(request, replyMock);
+    shouldBeCalled(TxUtil.setAutoDeposit);
+    shouldBeCalled(OrderbookApi.orders.create);
+  });
+
+  it(`should call setAutoDeposit for market with ETH base ccy`, async () => {
+    // prepare
+    stub(sandbox, TxUtil, 'isNeedAutoDeposit').returns(true);
+    const request = Object.assign({}, REQUEST);
+    request.payload.market = 'ETH-BASE';
+    request.payload.type = 'buy';
+
+    // act
+    await CreateOrderHandler.handle(request, replyMock);
+    shouldBeCalled(TxUtil.setAutoDeposit);
+    shouldBeCalled(OrderbookApi.orders.create);
+  });
+
+  it(`should return 400 error 'Invalid order type'`, async () => {
+    // prepare
     const request = Object.assign({}, REQUEST);
     request.payload.type = 'unknown';
     const invalidTypeResponse = { 'error': 'Invalid order type'};
@@ -79,7 +120,7 @@ describe('endpoint test | POST /orders', () => {
   });
 
   it(`should return 400 error 'Invalid market, assetSymbol not found'`, async () => {
-    //prepare
+    // prepare
     const request = Object.assign({}, REQUEST);
     const assetSymbol = 'XXX';
     request.payload.market = `${assetSymbol}-ETH`;

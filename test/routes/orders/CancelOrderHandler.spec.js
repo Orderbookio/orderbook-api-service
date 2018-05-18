@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 
-describe('endpoint test | DELETE /orders', () => {
 
+describe('endpoint test | DELETE /orders', () => {
   const CancelOrderHandler = require('./../../../src/routes/orders/CancelOrderHandler');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
   const AuthService = require('./../../../src/services/AuthService');

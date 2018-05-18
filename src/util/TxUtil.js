@@ -10,7 +10,9 @@ const Provider = require('./Provider');
 const web3 = Provider.web3;
 
 const txTypes = {
-  APPROVE: 'approve'
+  APPROVE: 'approve',
+  EXCHANGE: 'exchange',
+  SET_AUTO_DEPOSIT: 'setAutoDeposit'
 };
 
 const txStatus = {
@@ -20,14 +22,16 @@ const txStatus = {
 
 
 const TxUtil = {
-  approve(authToken, assetSymbol, contractAddress, privateKey, nonce) {
+  approve(authToken, assetSymbol, contractAddress, privateKey) {
     return Promise.try(async () => {
       const obContract = LocalStorage.getOBContract();
 
       const { contract: assetContract } = ContractsUtil.getAsset(assetSymbol);
       const allowance = await OrderbookApi.account.getAllowance(authToken, assetSymbol);
 
-      if (allowance == 0) {
+      if (allowance === 0) {
+        const nonce = await OrderbookApi.account.getNonce(authToken);
+
         const formattedNonce = ethUtil.setLengthLeft(web3.toHex(nonce), 32).toString('hex');
         const formattedValue = ethUtil.setLengthLeft(web3.toHex(0), 32).toString('hex');
         const assetContractAddress = assetContract.address.substr(2);
@@ -37,7 +41,7 @@ const TxUtil = {
         const op = web3.sha3(`0x${assetContractAddress}${formattedValue}${data}${contractAddress.substr(2)}${formattedNonce}`, { encoding: 'hex' });
         const sig = Signer.sign(op, privateKey);
 
-        const hash = await OrderbookApi.account.approve(authToken, assetSymbol, assetContract.address.substr(2), nonce, op, sig);
+        const hash = await OrderbookApi.account.approve(authToken, assetSymbol, assetContract.address, nonce, op, sig);
         return hash;
       }
 
@@ -66,6 +70,45 @@ const TxUtil = {
     });
 
     return isNeedApprove;
+  },
+
+  async isNeedAutoDeposit(token, email) {
+    let isAutoDepositRequired = LocalStorage.isAutoDepositRequired(email);
+
+    if (isAutoDepositRequired) {
+      const txs = await OrderbookApi.txs.getTransactionsByTypes(token, [txTypes.EXCHANGE, txTypes.SET_AUTO_DEPOSIT]);
+
+      for (const tx of txs) {
+        if (tx.status === txStatus.DONE || tx.status === txStatus.PENDING) {
+          isAutoDepositRequired = false;
+          break;
+        }
+      }
+
+      LocalStorage.setAutoDepositRequired(email, isAutoDepositRequired);
+    }
+
+    return isAutoDepositRequired;
+  },
+
+  async setAutoDeposit(authToken, userContractAddress, privateKey) {
+    const nonce = await OrderbookApi.account.getNonce(authToken);
+
+    const { contract: assetContract, address } = ContractsUtil.getAsset('ETH');
+
+    const data = assetContract.setAutoDeposit.getData(true);
+
+    const { op, sig } = Signer.prepareOperation(
+      address,
+      0,
+      data,
+      userContractAddress,
+      nonce,
+      privateKey
+    );
+
+    const res = await OrderbookApi.account.setAutoDeposit(authToken, address, nonce, op, sig);
+    return res.hash;
   }
 };
 
