@@ -78,8 +78,7 @@ const TxUtil = {
     if (isAutoDepositRequired) {
       const txs = await OrderbookApi.txs.getTransactionsByTypes(token, [txTypes.EXCHANGE, txTypes.SET_AUTO_DEPOSIT]);
 
-      for (const idx in txs) {
-        const tx = txs[idx];
+      for (const tx of txs) {
         if (tx.status === txStatus.DONE || tx.status === txStatus.PENDING) {
           isAutoDepositRequired = false;
           break;
