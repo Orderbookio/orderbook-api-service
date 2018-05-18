@@ -15,14 +15,14 @@ class GetOpenOrders {
 
     buy.forEach((order) => {
       delete order.owner;
-      order.amount = ContractsUtil.toRealAmount(order.amount, baseCCY);
-      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY);
+      order.amount = ContractsUtil.toRealAmount(order.amount, baseCCY).toString(10);
+      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY).toString(10);
     });
 
     sell.forEach((order) => {
       delete order.owner;
-      order.amount = ContractsUtil.toRealAmount(order.amount, baseCCY);
-      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY);
+      order.amount = ContractsUtil.toRealAmount(order.amount, baseCCY).toString(10);
+      order.price = ContractsUtil.pricePerUnitToToken(order.price, baseCCY, counterCCY).toString(10);
     });
 
     return reply({ buy, sell });

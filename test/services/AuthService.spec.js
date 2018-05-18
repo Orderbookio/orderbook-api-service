@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
+
 describe('test AuthService', () => {
   const AuthService = require('./../../src/services/AuthService');
   const LocalStorage = require('./../../src/services/LocalStorage');

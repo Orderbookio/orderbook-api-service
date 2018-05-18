@@ -1,11 +1,10 @@
-const { expect } = require('chai');
 const sinon = require('sinon');
 
-describe('endpoint test | POST /login', () => {
 
-  const LoginHandler = require('./../../../src/routes/auth/LoginHandler');
+describe('endpoint test | GET /orders/{market}', () => {
+  const GetOpenOrders = require('../../../src/routes/orders/GetUserOpenOrders');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
-
+  const AuthService = require('./../../../src/services/AuthService');
 
   /**
    * Stubs
@@ -14,7 +13,6 @@ describe('endpoint test | POST /login', () => {
   const replyMock = require('../../helpers/replyMock').init(sandbox);
   const { stub } = require('../../helpers/stubHelper');
 
-
   const REQUEST = {
     // auth
     auth: {
@@ -22,12 +20,16 @@ describe('endpoint test | POST /login', () => {
         email: 'test@mail.com',
         OBPassword: '123456'
       }
+    },
+    params: {
+      market: 'BASE-ETH'
     }
   };
 
 
   beforeEach(() => {
-    stub(sandbox, OrderbookApi.auth, 'login').resolves({ token: 'token', container: {} });
+    stub(sandbox, AuthService, 'getAuthData').resolves({ token: 'token', privateKey: 'pk', userContractAddress: '0x0', email: 'test@mail.com' });
+    stub(sandbox, OrderbookApi.orders, 'getOrdersByProxy').resolves({ buy: [], sell: []});
   });
 
   afterEach(() => {
@@ -36,6 +38,6 @@ describe('endpoint test | POST /login', () => {
 
   it(`should make a successful call`, async () => {
     // act
-    await LoginHandler.handle(REQUEST, replyMock);
+    await GetOpenOrders.handle(REQUEST, replyMock);
   });
 });

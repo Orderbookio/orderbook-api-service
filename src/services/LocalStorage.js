@@ -5,7 +5,8 @@ class LocalStorage {
       CONTAINERS: 'CONTAINERS',
       CONTRACT: 'CONTRACT',
       ASSETS: 'ASSETS',
-      APPROVE_TXS: 'APPROVE_TXS'
+      APPROVE_TXS: 'APPROVE_TXS',
+      AUTO_DEPOSIT_REQUIRED: 'AUTO_DEPOSIT_REQUIRED',
     };
 
     this.storage = {};
@@ -62,6 +63,17 @@ class LocalStorage {
     const data = this.storage[this.items.APPROVE_TXS] || {};
     data[email] = txs;
     this.storage[this.items.APPROVE_TXS] = data;
+  }
+
+  isAutoDepositRequired(email) {
+    const data = this.storage[this.items.AUTO_DEPOSIT_REQUIRED] || {};
+    return data[email] || true;
+  }
+
+  setAutoDepositRequired(email, isRequired) {
+    const data = this.storage[this.items.AUTO_DEPOSIT_REQUIRED] || {};
+    data[email] = isRequired;
+    this.storage[this.items.AUTO_DEPOSIT_REQUIRED] = data;
   }
 }
 

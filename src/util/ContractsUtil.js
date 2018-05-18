@@ -7,7 +7,7 @@ const Provider = require('./Provider');
 const web3 = Provider.web3;
 const LocalStorage = require('./../services/LocalStorage');
 
-const assetsAbi = [{constant: false, inputs: [{name: '_spender', type: 'address'}, {name: '_value', type: 'uint256'}], name: 'approve', outputs: [{name: 'success', type: 'bool'}], payable: false, type: 'function'}, {constant: true, inputs: [], name: 'totalSupply', outputs: [{name: 'supply', type: 'uint256'}], payable: false, type: 'function'}, {constant: false, inputs: [{name: '_from', type: 'address'}, {name: '_to', type: 'address'}, {name: '_value', type: 'uint256'}], name: 'transferFrom', outputs: [{name: 'success', type: 'bool'}], payable: false, type: 'function'}, {constant: true, inputs: [{name: '_owner', type: 'address'}], name: 'balanceOf', outputs: [{name: 'balance', type: 'uint256'}], payable: false, type: 'function'}, {constant: false, inputs: [{name: '_to', type: 'address'}, {name: '_value', type: 'uint256'}], name: 'transfer', outputs: [{name: 'success', type: 'bool'}], payable: false, type: 'function'}, {constant: true, inputs: [{name: '_owner', type: 'address'}, {name: '_spender', type: 'address'}], name: 'allowance', outputs: [{name: 'remaining', type: 'uint256'}], payable: false, type: 'function'}, {anonymous: false, inputs: [{indexed: true, name: '_from', type: 'address'}, {indexed: true, name: '_to', type: 'address'}, {indexed: false, name: '_value', type: 'uint256'}], name: 'Transfer', type: 'event'}, {anonymous: false, inputs: [{indexed: true, name: '_owner', type: 'address'}, {indexed: true, name: '_spender', type: 'address'}, {indexed: false, name: '_value', type: 'uint256'}], name: 'Approved', type: 'event'}];
+const ASSETS_ABI = [{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"supply","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approved","type":"event"}];
 
 
 const ContractsUtil = {
@@ -18,12 +18,13 @@ const ContractsUtil = {
 
     const { contract, address } = asset;
     if (!contract) {
-      asset.contract = web3.eth.contract(assetsAbi).at(address);
+      asset.contract = web3.eth.contract(ASSETS_ABI).at(address);
       Promise.promisifyAll(asset.contract);
     }
 
     return asset;
   },
+
 
   toRawAmount(amount, symbol) {
     const asset = this.getAsset(symbol);

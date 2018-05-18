@@ -33,7 +33,7 @@ class BaseConfig {
           level: 'debug'
         }
       }
-    }
+    };
   }
 }
 

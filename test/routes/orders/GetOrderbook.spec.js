@@ -1,11 +1,10 @@
 const sinon = require('sinon');
 
-describe('endpoint test | GET /orders/{market}', () => {
 
-  const GetOpenOrders = require('../../../src/routes/orders/GetUserOpenOrders');
+describe('endpoint test | GET /orderbook/{market}', () => {
+  const GetOrderbook = require('../../../src/routes/orders/GetOrderbook');
   const OrderbookApi = require('./../../../src/api/OrderbookApi');
   const AuthService = require('./../../../src/services/AuthService');
-
 
   /**
    * Stubs
@@ -13,7 +12,6 @@ describe('endpoint test | GET /orders/{market}', () => {
   const sandbox = sinon.sandbox.create();
   const replyMock = require('../../helpers/replyMock').init(sandbox);
   const { stub } = require('../../helpers/stubHelper');
-
 
   const REQUEST = {
     // auth
@@ -31,7 +29,7 @@ describe('endpoint test | GET /orders/{market}', () => {
 
   beforeEach(() => {
     stub(sandbox, AuthService, 'getAuthData').resolves({ token: 'token', privateKey: 'pk', userContractAddress: '0x0', email: 'test@mail.com' });
-    stub(sandbox, OrderbookApi.orders, 'getOrdersByProxy').resolves({ buy: [], sell: []});
+    stub(sandbox, OrderbookApi.orders, 'getOrderbook').resolves({ buy: [], sell: []});
   });
 
   afterEach(() => {
@@ -40,6 +38,6 @@ describe('endpoint test | GET /orders/{market}', () => {
 
   it(`should make a successful call`, async () => {
     // act
-    await GetOpenOrders.handle(REQUEST, replyMock);
+    await GetOrderbook.handle(REQUEST, replyMock);
   });
 });
