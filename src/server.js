@@ -105,7 +105,7 @@ server.register([
     return reply.continue();
   });
 
-  //Start server
+  // Start server
   server.start(async (err) => {
     if (!err) {
       await Application.init();

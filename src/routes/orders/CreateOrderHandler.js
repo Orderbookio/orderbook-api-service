@@ -46,7 +46,7 @@ class CreateOrderHandler {
       await TxUtil.approve(token, assetSymbol, userContractAddress, privateKey);
     }
 
-    //check and send autoDeposit Tx
+    // check and send autoDeposit Tx
     if ((type === 'buy' && baseCCY === 'ETH') || (type === 'sell' && counterCCY === 'ETH')) {
       if (await TxUtil.isNeedAutoDeposit(token, email)) {
         await TxUtil.setAutoDeposit(token, userContractAddress, privateKey);

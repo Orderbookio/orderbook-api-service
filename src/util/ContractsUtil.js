@@ -25,18 +25,18 @@ const ContractsUtil = {
     return asset;
   },
 
-
   toRawAmount(amount, symbol) {
     const asset = this.getAsset(symbol);
     if (!asset) {
       LOG.warn(`Symbol ${symbol} not registered.`);
       return amount;
     }
+
     if (!amount.isBigNumber) {
       amount = new BigNumber(amount);
     }
-    return amount.mul(Math.pow(10, asset.baseUnit));
 
+    return amount.mul(Math.pow(10, asset.baseUnit));
   },
 
   toRealAmount(rawAmount, symbol) {
@@ -45,11 +45,12 @@ const ContractsUtil = {
       LOG.warn(`Symbol ${symbol} not registered.`);
       return rawAmount;
     }
+
     if (!rawAmount.isBigNumber) {
       rawAmount = new BigNumber(rawAmount);
     }
-    return rawAmount.dividedBy(Math.pow(10, asset.baseUnit));
 
+    return rawAmount.dividedBy(Math.pow(10, asset.baseUnit));
   },
 
   pricePerTokenToUnit(price, baseCCY, counterCCY) {

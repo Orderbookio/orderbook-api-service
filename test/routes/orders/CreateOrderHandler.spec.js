@@ -79,7 +79,7 @@ describe('endpoint test | POST /orders', () => {
   });
 
   it(`should call setAutoDeposit for market with ETH counter ccy`, async () => {
-    //prepare
+    // prepare
     stub(sandbox, TxUtil, 'isNeedAutoDeposit').returns(true);
     const request = Object.assign({}, REQUEST);
     request.payload.market = 'BASE-ETH';
@@ -92,7 +92,7 @@ describe('endpoint test | POST /orders', () => {
   });
 
   it(`should call setAutoDeposit for market with ETH base ccy`, async () => {
-    //prepare
+    // prepare
     stub(sandbox, TxUtil, 'isNeedAutoDeposit').returns(true);
     const request = Object.assign({}, REQUEST);
     request.payload.market = 'ETH-BASE';
@@ -105,7 +105,7 @@ describe('endpoint test | POST /orders', () => {
   });
 
   it(`should return 400 error 'Invalid order type'`, async () => {
-    //prepare
+    // prepare
     const request = Object.assign({}, REQUEST);
     request.payload.type = 'unknown';
     const invalidTypeResponse = { 'error': 'Invalid order type'};
@@ -120,7 +120,7 @@ describe('endpoint test | POST /orders', () => {
   });
 
   it(`should return 400 error 'Invalid market, assetSymbol not found'`, async () => {
-    //prepare
+    // prepare
     const request = Object.assign({}, REQUEST);
     const assetSymbol = 'XXX';
     request.payload.market = `${assetSymbol}-ETH`;
