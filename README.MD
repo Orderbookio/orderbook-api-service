@@ -44,5 +44,4 @@ npm run prod
 ```
 
 ### License
-See the LICENSE file for details
-[License](LICENSE)
+See the [LICENSE](LICENSE) file for details
