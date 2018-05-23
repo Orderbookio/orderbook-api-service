@@ -45,4 +45,4 @@ npm run prod
 
 ### License
 See the LICENSE file for details
-[Licence](LICENCE)
+[License](LICENSE)
