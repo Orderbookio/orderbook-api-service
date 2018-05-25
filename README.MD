@@ -61,7 +61,7 @@ and example
 }());
 ```
 
-or execute in the project root directory
+or execute next command in the project root directory
 ```
 node getAuthPassword.js YOU_PASSWORD
 ```
@@ -71,7 +71,7 @@ node getAuthPassword.js YOU_PASSWORD
 npm run prod
 ```
 
-to see swagger documentation open http://localhost:5000/documentation
+to see the swagger documentation open http://localhost:5000/documentation
 
 ### License
 See the [LICENSE](LICENSE) file for details
