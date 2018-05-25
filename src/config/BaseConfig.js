@@ -1,18 +1,15 @@
+const props = require('./../../properties.json');
 const {
-  SERVER_PORT,
-  IS_AUTH_ENABLED,
-  ORDERBOOK_URL,
-  USERS
+  SERVER_PORT
 } = process.env;
-
 
 class BaseConfig {
   constructor() {
     this.port = SERVER_PORT || 5000;
-    this.orderbookUrl = ORDERBOOK_URL || 'http://localhost:3000';
-    this.isAuthEnabled = IS_AUTH_ENABLED === 'false' ? false : true;
+    this.orderbookUrl = props.orderbookUrl || 'http://localhost:3000';
+    this.isAuthEnabled = props.isAuthEnabled || false;
     this.auth = this.isAuthEnabled ? 'simple' : false;
-    this.users = USERS ? JSON.parse(USERS) : [];
+    this.users = props.users || [];
     this.log4jsConfig = {
       appenders: {
         out: {
