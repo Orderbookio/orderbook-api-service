@@ -11,7 +11,7 @@ execude ``` node -v ``` command
 
 as a result you will see **8.11.X**, it means everything is okay
 
-then locate to the project root directory and install dependencies
+then go to the project root directory and install dependencies
 
 ```
 npm install
@@ -22,6 +22,7 @@ npm install
 In the **properties.json** file you have to define next config
 
 **orderbookUrl** - by default http://localhost:3000, for production: https://api.orderbook.io
+
 **isAuthEnabled** - true/false. This option enable or not BASIC authentication
 for all the endpoints which requires orderbook JWT authentication.
 If auth disabled, service will get first user in array for orderbook authentication.
