@@ -1,5 +1,9 @@
 ##  To use Orderbook API you have to run this service.
 
+### Pre-conditions
+You have to create an account at Orderbook and pass identity verifications.
+
+### --------------------------------------------------------------------
 Before starting server:
 ### Setup
 
@@ -23,9 +27,31 @@ In the **properties.json** file you have to define next config
 
 **orderbookUrl** - by default http://localhost:3000, for production: https://api.orderbook.io
 
-**isAuthEnabled** - true/false. This option enable or not BASIC authentication
-for all the endpoints which requires orderbook JWT authentication.
-If auth disabled, service will get first user in array for orderbook authentication.
+**isAuthEnabled**:
+
+*false* - use this option if you are using only one account for this service. There will be no
+authentication in this service for your account. If you have more than one account, the
+ first one from the config array(users) would be used. **Use this option only locally with closed TCP
+ports.**
+
+*true* - Enable basic authentication for the API service. Requires adding authPassword for each user
+in properties.json.
+
+To generate **authPassword** you can use Bycrypt
+and example
+```javascript
+(async function () {
+  const salt = await Bcrypt.genSalt();
+  const password = '123456';
+  const hashed = await Bcrypt.hash(password, salt);
+  console.log(`hashed password: ${hashed}`);
+}());
+```
+
+or execute next command in the project root directory
+```
+node getAuthPassword.js YOUR_PASSWORD
+```
 
 **users** - the array of orderbook users, each user
 should have *email*, *OBPassword*, *authPassword* (if isAuthEnabled is true), *proxyAddress*, *userContractAddress*
@@ -50,21 +76,7 @@ an example of USERS variable
   ]
 ```
 
-To generate **authPassword** you can use Bycrypt
-and example
-```javascript
-(async function () {
-  const salt = await Bcrypt.genSalt();
-  const password = '123456';
-  const hashed = await Bcrypt.hash(password, salt);
-  console.log(`hashed password: ${hashed}`);
-}());
-```
 
-or execute next command in the project root directory
-```
-node getAuthPassword.js YOU_PASSWORD
-```
 
 ### To start server execute
 ```
