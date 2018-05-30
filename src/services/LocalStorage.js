@@ -6,7 +6,7 @@ class LocalStorage {
       CONTRACT: 'CONTRACT',
       ASSETS: 'ASSETS',
       APPROVE_TXS: 'APPROVE_TXS',
-      AUTO_DEPOSIT_REQUIRED: 'AUTO_DEPOSIT_REQUIRED',
+      AUTO_DEPOSIT_REQUIRED: 'AUTO_DEPOSIT_REQUIRED'
     };
 
     this.storage = {};
@@ -41,7 +41,6 @@ class LocalStorage {
   setOBContract(contract) {
     this.storage[this.items.CONTRACT] = contract;
   }
-
 
   getAssets() {
     return this.storage[this.items.ASSETS] || {};

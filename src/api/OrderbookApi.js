@@ -45,6 +45,12 @@ class OrderbookApi {
     };
 
     this.account = {
+      getInfo(authToken) {
+        return axios.get(`${ORDERBOOK_SERVER_URL}/account`, getAuthHeader(authToken))
+          .then(res => res.data)
+          .catch(handleOBError);
+      },
+
       getBalances(authToken, assets = []) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/account/balances?assets=${assets.join(',')}`, getAuthHeader(authToken))
           .then(res => res.data)

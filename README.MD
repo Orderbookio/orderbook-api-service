@@ -41,10 +41,9 @@ ports.**
 `true` - Enable basic authentication for the API service. Requires adding authPassword for each user
 in properties.json. How to generate authPassword would be included below.
 * **users** - the array of orderbook users, each user
-should have *email*, *OBPassword*, *authPassword* (if isAuthEnabled is true), *proxyAddress*, *userContractAddress*.
+should have *email*, *OBPassword*, *authPassword* (if isAuthEnabled is true),
 `email` is an email you used for registration at Orderbook.
 `OBPassword` is your Orderbook password.
-`proxyAddress` is your ETH deposit address. You can find it on the [balances page](https://www.orderbook.io/#/balances) when you are logeed in
 .
 
 an example of USERS variable
@@ -53,16 +52,12 @@ an example of USERS variable
     {
       "email":"test@mail.com",
       "OBPassword":"123456",
-      "authPassword":"$2b$10$ktnC1vxrxPUsquk7mLoyJuytOsI1e6MXYi/ned1UUSDNZmD32t0ky",
-      "proxyAddress":"0xda62d634232878acf489882ddda780986f2361af",
-      "userContractAddress":"0x8708a00e249c108fcf0c01a8a98307d3537aa44f"
+      "authPassword":"$2b$10$ktnC1vxrxPUsquk7mLoyJuytOsI1e6MXYi/ned1UUSDNZmD32t0ky"
     },
     {
       "email":"test1@mail.com",
       "OBPassword":"123456",
-      "authPassword":"$2b$10$ktnC1vxrxPUsquk7mLoyJuytOsI1e6MXYi/ned1UUSDNZmD32t0ky",
-      "proxyAddress":"0x26edee9f9cbca98e0b08c76ec637623d983b0be9",
-      "userContractAddress":"0xfbe0ce52f1a8e25c6dc6320c70021ef08460bdc2"
+      "authPassword":"$2b$10$ktnC1vxrxPUsquk7mLoyJuytOsI1e6MXYi/ned1UUSDNZmD32t0ky"
     }
   ]
 ```
