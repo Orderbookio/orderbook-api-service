@@ -9,12 +9,12 @@ const Encryptor = require('./../util/Encryptor');
 
 class AuthService {
   async getAuthData(credentials) {
-    const { email, OBPassword, proxyAddress, userContractAddress } = credentials;
+    const { email, OBPassword } = credentials;
 
     const authData = LocalStorage.getAuthData(email);
-    let { token, privateKey } = authData;
+    let { token, privateKey, userContractAddress, proxyAddress } = authData;
 
-    const res = { token, privateKey, proxyAddress, userContractAddress, email };
+    const res = { token, privateKey, email, userContractAddress, proxyAddress };
 
     let isAuthenticated = false;
     if (token) {
@@ -40,12 +40,19 @@ class AuthService {
     res.token = data.token;
 
     const containers = LocalStorage.getContainers();
-    if (!containers[email]) {
+    if (!containers[email]) { // store user container in storage
       containers[email] = container;
       await LocalStorage.setContainers(containers);
     }
 
     res.privateKey = Encryptor.decrypt(container, OBPassword);
+
+
+    if (!userContractAddress || !proxyAddress) {
+      const accountInfo = await OrderbookApi.account.getInfo(res.token);
+      res.proxyAddress = accountInfo.proxyAddress;
+      res.userContractAddress = accountInfo.contractAddress;
+    }
 
     LocalStorage.setAuthData(email, res);
 
