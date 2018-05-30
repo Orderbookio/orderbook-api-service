@@ -6,8 +6,7 @@ class LocalStorage {
       CONTRACT: 'CONTRACT',
       ASSETS: 'ASSETS',
       APPROVE_TXS: 'APPROVE_TXS',
-      AUTO_DEPOSIT_REQUIRED: 'AUTO_DEPOSIT_REQUIRED',
-      ACCOUNT_INFO: 'ACCOUNT_INFO',
+      AUTO_DEPOSIT_REQUIRED: 'AUTO_DEPOSIT_REQUIRED'
     };
 
     this.storage = {};
