@@ -103,9 +103,7 @@ server.register([
       const user = users[0];
       const credentials = {
         email: user.email,
-        OBPassword: user.OBPassword,
-        proxyAddress: user.proxyAddress,
-        userContractAddress: user.userContractAddress
+        OBPassword: user.OBPassword
       };
 
       request.auth = Object.assign(request.auth, { credentials });
