@@ -9,7 +9,7 @@ const GetTradesHandler = require('./GetTradesHandler');
 
 module.exports = [
   {
-    path: '/balances',
+    path: `${config.apiVersion1}/balances`,
     method: 'GET',
     config: {
       auth: config.auth,
@@ -20,7 +20,7 @@ module.exports = [
     handler: GetUserBalancesHandler.handle
   },
   {
-    path: '/markets',
+    path: `${config.apiVersion1}/markets`,
     method: 'GET',
     config: {
       description: 'Get available market names',
@@ -33,7 +33,7 @@ module.exports = [
     handler: GetMarketsHandler.handle
   },
   {
-    path: '/trades/{market}',
+    path: `${config.apiVersion1}/trades/{market}`,
     method: 'GET',
     config: {
       description: 'Get trades by market name',
