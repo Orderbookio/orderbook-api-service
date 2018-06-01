@@ -21,7 +21,6 @@
   "dependencies": {
     "ambisafe-client-javascript": "git://github.com/Ambisafe/client-javascript.git",
     "axios": "0.18.0",
-    "bcrypt": "2.0.1",
     "bignumber.js": "4.1.0",
     "bluebird": "3.5.1",
     "boom": "3.1.1",

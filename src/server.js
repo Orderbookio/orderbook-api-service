@@ -6,7 +6,6 @@ const Vision = require('vision');
 const AuthBasic = require('hapi-auth-basic');
 const HapiSwagger = require('hapi-swagger');
 const log4js = require('log4js');
-const Bcrypt = require('bcrypt');
 
 const Application = require('./Application');
 const config = require('./config/index');
@@ -63,12 +62,10 @@ server.register([
           return callback(null, false, {});
         }
 
-        const isValid = await Bcrypt.compare(password, user.authPassword);
+        const isValid = password.trim() === user.authPassword;
         const credentials = {
           email: user.email,
-          OBPassword: user.OBPassword,
-          proxyAddress: user.proxyAddress,
-          userContractAddress: user.userContractAddress
+          password: user.password
         };
 
         return callback(null, isValid, credentials);
@@ -103,7 +100,7 @@ server.register([
       const user = users[0];
       const credentials = {
         email: user.email,
-        OBPassword: user.OBPassword
+        password: user.password
       };
 
       request.auth = Object.assign(request.auth, { credentials });

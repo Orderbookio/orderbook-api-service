@@ -16,7 +16,7 @@ describe('test AuthService', () => {
 
   const CREDENTIALS = {
     email: 'test@mail.com',
-    OBPassword: '123456'
+    password: '123456'
   };
 
   const JWTTokenInLocalStorage = 'TOKEN_FROM_LOCAL_STORAGE';
@@ -31,6 +31,7 @@ describe('test AuthService', () => {
   beforeEach(() => {
     stub(sandbox, OrderbookApi.auth, 'login').resolves({ token: JWTTokenFromOB, container: {} });
     stub(sandbox, OrderbookApi.auth, 'isAuthenticated').resolves({ auth: true });
+    stub(sandbox, OrderbookApi.account, 'getInfo').resolves({ proxyAddress: '0x0', contractAddress: '0x0' });
     stub(sandbox, LocalStorage, 'getAuthData').returns(AUTH_DATA);
     stub(sandbox, LocalStorage, 'setAuthData').resolves();
     stub(sandbox, LocalStorage, 'getContainers').resolves({});
