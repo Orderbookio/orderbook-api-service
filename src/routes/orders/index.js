@@ -74,7 +74,7 @@ module.exports = [
     config: {
       auth: config.auth,
       description: 'Get open orders by market name',
-      notes: 'Returns user buy and sell orders for specified market, example {\n' +
+      notes: 'Returns buy and sell orders for specified market, example {\n' +
       '    "buy": [],\n' +
       '    "sell": [\n' +
       '        {\n' +

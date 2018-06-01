@@ -18,7 +18,7 @@ describe('endpoint test | GET /orders/{market}', () => {
     auth: {
       credentials: {
         email: 'test@mail.com',
-        OBPassword: '123456'
+        password: '123456'
       }
     },
     params: {

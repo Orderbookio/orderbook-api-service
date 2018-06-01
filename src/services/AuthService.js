@@ -9,7 +9,7 @@ const Encryptor = require('./../util/Encryptor');
 
 class AuthService {
   async getAuthData(credentials) {
-    const { email, OBPassword } = credentials;
+    const { email, password } = credentials;
 
     const authData = LocalStorage.getAuthData(email);
     let { token, privateKey, userContractAddress, proxyAddress } = authData;
@@ -26,7 +26,7 @@ class AuthService {
       return res;
     }
 
-    const passwordHash = ethUtils.sha3(OBPassword).toString('hex');
+    const passwordHash = ethUtils.sha3(password).toString('hex');
 
     let data;
     try {
@@ -45,7 +45,7 @@ class AuthService {
       await LocalStorage.setContainers(containers);
     }
 
-    res.privateKey = Encryptor.decrypt(container, OBPassword);
+    res.privateKey = Encryptor.decrypt(container, password);
 
 
     if (!userContractAddress || !proxyAddress) {

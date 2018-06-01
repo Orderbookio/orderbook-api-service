@@ -22,7 +22,7 @@ describe('endpoint test | DELETE /orders', () => {
     auth: {
       credentials: {
         email: 'test@mail.com',
-        OBPassword: '123456'
+        password: '123456'
       }
     },
     payload: {

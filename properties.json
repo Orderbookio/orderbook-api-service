@@ -5,12 +5,12 @@
     {
       "email":"test@mail.com",
       "OBPassword":"123456",
-      "authPassword":"$2b$10$ktnC1vxrxPUsquk7mLoyJuytOsI1e6MXYi/ned1UUSDNZmD32t0ky"
+      "authPassword":"111111"
     },
     {
       "email":"test1@mail.com",
       "OBPassword":"123456",
-      "authPassword":"$2b$10$ktnC1vxrxPUsquk7mLoyJuytOsI1e6MXYi/ned1UUSDNZmD32t0ky"
+      "authPassword":"111111"
     }
   ]
 }
