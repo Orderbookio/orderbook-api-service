@@ -299,4 +299,4 @@ curl -X GET --header 'Accept: application/json' 'http://localhost:5000/v1/trades
 
 # License
 
-See the [LICENSE](https://github.com/Orderbookio/orderbook-api-service/blob/master/LICENSE) file for details
+See the [LICENSE](LICENSE) file for details
