@@ -12,7 +12,7 @@ const GetOrderbook = require('./GetOrderbook');
 
 module.exports = [
   {
-    path: '/orders/{market}',
+    path: `${config.apiVersion1}/orders/{market}`,
     method: 'GET',
     config: {
       auth: config.auth,
@@ -33,7 +33,7 @@ module.exports = [
     handler: GetUserOpenOrders.handle
   },
   {
-    path: '/orders',
+    path: `${config.apiVersion1}/orders`,
     method: 'POST',
     config: {
       auth: config.auth,
@@ -52,7 +52,7 @@ module.exports = [
     handler: CreateOrderHandler.handle
   },
   {
-    path: '/orders',
+    path: `${config.apiVersion1}/orders`,
     method: 'DELETE',
     config: {
       auth: config.auth,
@@ -69,7 +69,7 @@ module.exports = [
     handler: CancelOrderHandler.handle
   },
   {
-    path: '/orderbook/{market}',
+    path: `${config.apiVersion1}/orderbook/{market}`,
     method: 'GET',
     config: {
       auth: config.auth,

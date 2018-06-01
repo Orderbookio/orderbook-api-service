@@ -10,6 +10,7 @@ class BaseConfig {
     this.isAuthEnabled = props.isAuthEnabled || false;
     this.auth = this.isAuthEnabled ? 'simple' : false;
     this.users = props.users || [];
+    this.apiVersion1 = '/v1';
     this.log4jsConfig = {
       appenders: {
         out: {

@@ -11,6 +11,7 @@ const Bcrypt = require('bcrypt');
 const Application = require('./Application');
 const config = require('./config/index');
 const Pack = require('../package');
+const ApiVersion = require('./plugins/api-version/index');
 const { handle } = require('./util/RouteHandler');
 const users = config.users;
 
@@ -41,6 +42,13 @@ server.register([
   {
     'register': HapiSwagger,
     'options': swaggerOptions
+  },
+  {
+    register: ApiVersion,
+    options: {
+      validVersions: [1, 2],
+      defaultVersion: 1
+    }
   }], (err) => {
   if (err) {
     console.log('Error register plugins:', err);
