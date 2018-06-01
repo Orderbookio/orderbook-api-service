@@ -2,7 +2,7 @@
 
 # Introduction
 
-## Why?
+# To use Orderbook API you have to run this service. Why?
 
 Orderbook uses client-side cryptography to preserve the highest level of security. And there is no client-side when using API.
 Therefore was created special service that would be run locally by an API implementator to preserve the same level of security along with ease of use.
