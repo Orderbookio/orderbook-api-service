@@ -65,7 +65,7 @@ server.register([
         const isValid = password.trim() === user.authPassword;
         const credentials = {
           email: user.email,
-          password: user.password
+          password: user.OBPassword
         };
 
         return callback(null, isValid, credentials);
