@@ -100,7 +100,7 @@ server.register([
       const user = users[0];
       const credentials = {
         email: user.email,
-        password: user.password
+        password: user.OBPassword
       };
 
       request.auth = Object.assign(request.auth, { credentials });
