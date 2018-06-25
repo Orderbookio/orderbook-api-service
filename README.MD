@@ -296,6 +296,26 @@ curl -X GET --header 'Accept: application/json' 'http://localhost:5000/v1/trades
 ### HTTP Request
 ***GET*** `/v1/trades/{market}`
 
+# transaction/{hash}/status
+## ***GET***
+
+```shell
+curl -X GET --header 'Accept: application/json' 'http://localhost:5000/v1/transaction/{hash}/status'
+```
+
+```javascript
+(async function () {
+  const response = await axios.get(`${SERVICE_URL}/v1/transaction/0xf002f7736144e3c9d2c26389dbb98dc1ed7fdbcede476989c9ce7710fee7cf370xf002f7736144e3c9d2c26389dbb98dc1ed7fdbcede476989c9ce7710fee7cf37/status`);
+  console.log('transaction status: ', JSON.stringify(response.data, null, 2));
+}());
+```
+
+**Summary:** Get transaction status by hash
+
+**Description:** Returns object with the status and timestamp. The timestamp is transaction creation date
+
+### HTTP Request
+***GET*** `/v1/transaction/{hash}/status`
 
 # License
 

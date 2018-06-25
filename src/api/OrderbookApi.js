@@ -116,6 +116,12 @@ class OrderbookApi {
         return axios.get(`${ORDERBOOK_SERVER_URL}/transactions`, ({ ...{ params: { types } }, ...getAuthHeader(authToken) }))
           .then(res => res.data)
           .catch(handleOBError);
+      },
+
+      getTransactionStatus(hash) {
+        return axios.get(`${ORDERBOOK_SERVER_URL}/txStatus/${hash}`)
+          .then(res => res.data)
+          .catch(handleOBError);
       }
     };
 

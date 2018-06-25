@@ -5,6 +5,7 @@ const { handle } = require('./../../util/RouteHandler');
 const GetUserBalancesHandler = require('./GetUserBalancesHandler');
 const GetMarketsHandler = require('./GetMarketsHandler');
 const GetTradesHandler = require('./GetTradesHandler');
+const GetTransactionStatusHandler = require('./GetTransactionStatusHandler');
 
 
 module.exports = [
@@ -41,5 +42,18 @@ module.exports = [
       tags: ['api']
     },
     handler: GetTradesHandler.handle
+  },
+  {
+    path: `${config.apiVersion1}/transaction/{hash}/status`,
+    method: 'GET',
+    config: {
+      description: 'Get transaction status by hash',
+      notes: 'Returns an object with tx status (PENDING, DONE, FAILED) and tx creation timestamp {\n' +
+      '    "status" : "PENDING",\n' +
+      '    "timestamp" : "1529408450546"\n' +
+      '}',
+      tags: ['api']
+    },
+    handler: GetTransactionStatusHandler.handle
   }
 ];
