@@ -5,6 +5,7 @@ const { handle } = require('./../../util/RouteHandler');
 const GetUserBalancesHandler = require('./GetUserBalancesHandler');
 const GetMarketsHandler = require('./GetMarketsHandler');
 const GetTradesHandler = require('./GetTradesHandler');
+const GetDepositAddress = require('./GetDepositAddress');
 
 
 module.exports = [
@@ -18,6 +19,17 @@ module.exports = [
       tags: ['api']
     },
     handler: GetUserBalancesHandler.handle
+  },
+  {
+    path: `${config.apiVersion1}/assets/{asset}/deposit`,
+    method: 'GET',
+    config: {
+      auth: config.auth,
+      description: 'Get user deposit address',
+      notes: 'Get user deposit address for specified asset',
+      tags: ['api']
+    },
+    handler: GetDepositAddress.handle
   },
   {
     path: `${config.apiVersion1}/markets`,

@@ -12,9 +12,9 @@ class AuthService {
     const { email, password } = credentials;
 
     const authData = LocalStorage.getAuthData(email);
-    let { token, privateKey, userContractAddress, proxyAddress } = authData;
+    let { token, privateKey, userContractAddress, proxyAddress, btcDepositAddress } = authData;
 
-    const res = { token, privateKey, email, userContractAddress, proxyAddress };
+    const res = { token, privateKey, email, userContractAddress, proxyAddress, btcDepositAddress };
 
     let isAuthenticated = false;
     if (token) {
@@ -48,10 +48,11 @@ class AuthService {
     res.privateKey = Encryptor.decrypt(container, password);
 
 
-    if (!userContractAddress || !proxyAddress) {
+    if (!userContractAddress || !proxyAddress || !btcDepositAddress) {
       const accountInfo = await OrderbookApi.account.getInfo(res.token);
       res.proxyAddress = accountInfo.proxyAddress;
       res.userContractAddress = accountInfo.contractAddress;
+      res.btcDepositAddress = accountInfo.btcDepositAddress;
     }
 
     LocalStorage.setAuthData(email, res);
