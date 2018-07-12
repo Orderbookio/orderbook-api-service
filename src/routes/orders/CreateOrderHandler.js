@@ -41,8 +41,10 @@ class CreateOrderHandler {
 
     LOG.info(`User: ${email}. Try to create order. Market: ${market}, type: ${type}, amount: ${amount}, price: ${price}`);
 
+    const { address: OBAddress, contract } = LocalStorage.getOBContract();
+
     // check and send approve tx
-    if (await TxUtil.isNeedApprove(token, email, asset)) {
+    if (await TxUtil.isNeedApprove(token, email, asset, OBAddress)) {
       await TxUtil.approve(token, assetSymbol, userContractAddress, privateKey);
     }
 
@@ -55,7 +57,6 @@ class CreateOrderHandler {
 
     const nonce = await OrderbookApi.account.getNonce(token);
 
-    const { address: OBAddress, contract } = LocalStorage.getOBContract();
 
     const newOrderRawAmount = ContractsUtil.toRawAmount(amount, baseCCY).floor();
     const newOrderRawPrice = ContractsUtil.pricePerTokenToUnit(price, baseCCY, counterCCY);

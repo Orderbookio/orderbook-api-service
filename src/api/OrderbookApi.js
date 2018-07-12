@@ -61,15 +61,15 @@ class OrderbookApi {
         return axios.get(`${ORDERBOOK_SERVER_URL}/nonce`, getAuthHeader(authToken)).then(res => res.data.nonce).catch(handleOBError);
       },
 
-      getAllowance(authToken, assetSymbol) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/account/${encodeURIComponent(assetSymbol)}/allowance`, getAuthHeader(authToken))
-          .then(res => res.data)
+      getAllowance(authToken, assetSymbol, targetContractAddress, approveAddress) {
+        return axios.post(`${ORDERBOOK_SERVER_URL}/account/allowance`, { assetSymbol, targetContractAddress, approveAddress }, getAuthHeader(authToken))
+          .then(res => res.data.allowance)
           .catch(handleOBError);
       },
 
-      approve(authToken, assetSymbol, assetAddress, nonce, op, sig) {
+      approve(authToken, assetSymbol, approveAddress, targetContractAddress,  nonce, op, sig) {
         const { v, r, s } = sig;
-        return axios.post(`${ORDERBOOK_SERVER_URL}/submit/approve`, { assetSymbol, assetAddress, nonce, op, v, r, s }, getAuthHeader(authToken))
+        return axios.post(`${ORDERBOOK_SERVER_URL}/submit/approve-any`, { assetSymbol, approveAddress, targetContractAddress, nonce, op, v, r, s }, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
