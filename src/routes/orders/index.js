@@ -2,7 +2,6 @@ const LOG = require('log4js').getLogger('orders/index.js');
 const Joi = require('joi');
 
 const config = require('./../../config/index');
-const { handle } = require('./../../util/RouteHandler');
 
 const CreateOrderHandler = require('./CreateOrderHandler');
 const CancelOrderHandler = require('./CancelOrderHandler');

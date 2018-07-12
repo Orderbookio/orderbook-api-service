@@ -1,7 +1,6 @@
-const LOG = require('log4js').getLogger('common/index.js');
 const config = require('./../../config/index');
-const { handle } = require('./../../util/RouteHandler');
 
+const CommonRoutesValidations = require('./CommonRoutesValidations');
 const GetUserBalancesHandler = require('./GetUserBalancesHandler');
 const GetMarketsHandler = require('./GetMarketsHandler');
 const GetTradesHandler = require('./GetTradesHandler');
@@ -52,7 +51,8 @@ module.exports = [
       '    "status" : "PENDING",\n' +
       '    "timestamp" : "1529408450546"\n' +
       '}',
-      tags: ['api']
+      tags: ['api'],
+      validate: CommonRoutesValidations.txStatusValidation()
     },
     handler: GetTransactionStatusHandler.handle
   }
