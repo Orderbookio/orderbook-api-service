@@ -8,7 +8,7 @@ class GetUserOpenOrders {
 
     const { token } = await AuthService.getAuthData(request.auth.credentials);
 
-    const orders = await OrderbookApi.orders.getOrdersByProxy(token, market);
+    const orders = await OrderbookApi.orders.getUserOpenOrders(token, market);
 
     return reply(orders);
   }

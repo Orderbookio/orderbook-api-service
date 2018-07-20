@@ -29,7 +29,7 @@ describe('endpoint test | GET /orders/{market}', () => {
 
   beforeEach(() => {
     stub(sandbox, AuthService, 'getAuthData').resolves({ token: 'token', privateKey: 'pk', userContractAddress: '0x0', email: 'test@mail.com' });
-    stub(sandbox, OrderbookApi.orders, 'getOrdersByProxy').resolves({ buy: [], sell: []});
+    stub(sandbox, OrderbookApi.orders, 'getUserOpenOrders').resolves({ buy: [], sell: []});
   });
 
   afterEach(() => {

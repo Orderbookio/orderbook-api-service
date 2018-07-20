@@ -98,7 +98,7 @@ class OrderbookApi {
           .catch(handleOBError);
       },
 
-      getOrdersByProxy(authToken, market) {
+      getUserOpenOrders(authToken, market) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/my-orders/`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
