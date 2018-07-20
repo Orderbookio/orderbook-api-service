@@ -2,17 +2,18 @@ const OrderbookApi = require('./../../api/OrderbookApi');
 const AuthService = require('./../../services/AuthService');
 
 
-class GetUserOpenOrders {
+class GetUserOrderStatus {
   async handle(request, reply) {
     const market = request.params.market;
+    const orderHash = request.params.orderHash;
 
     const { token } = await AuthService.getAuthData(request.auth.credentials);
 
-    const orders = await OrderbookApi.orders.getOrdersByProxy(token, market);
+    const order = await OrderbookApi.orders.getOrderStatus(token, market, orderHash);
 
-    return reply(orders);
+    return reply(order);
   }
 }
 
 
-module.exports = new GetUserOpenOrders();
+module.exports = new GetUserOrderStatus();
