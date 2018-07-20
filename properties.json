@@ -1,5 +1,5 @@
 {
-  "orderbookUrl": "http://localhost:3000",
+  "orderbookUrl": "https://api.orderbook.io",
   "isAuthEnabled": false,
   "users": [
     {
