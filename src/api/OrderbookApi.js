@@ -98,14 +98,20 @@ class OrderbookApi {
           .catch(handleOBError);
       },
 
-      getOrdersByProxy(authToken, market, address) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/orders/${address}`, getAuthHeader(authToken))
+      getUserOpenOrders(authToken, market) {
+        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/my-orders/`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
 
       getOrderbook(market) {
         return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}`)
+          .then(res => res.data)
+          .catch(handleOBError);
+      },
+
+      getOrderStatus(authToken, market, hash) {
+        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/my-orders/${encodeURIComponent(hash)}`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
