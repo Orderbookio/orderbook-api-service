@@ -21,16 +21,36 @@ class CreateOrderHandler {
 
     const { token, privateKey, userContractAddress, email } = await AuthService.getAuthData(request.auth.credentials);
 
+    const balances = await OrderbookApi.account.getBalances(token);
+    let baseCCYBalance = 0;
+    let counterCCYBalance = 0;
+    balances.forEach((item) => {
+      if (item.symbol === baseCCY) {
+        baseCCYBalance = item.balance;
+      } else if (item.symbol === counterCCY) {
+        counterCCYBalance = item.balance;
+      }
+    });
+
+
     let method, assetSymbol;
     if (type === 'buy') {
       method = 'submitBuyOrder';
       assetSymbol = counterCCY;
+      const counterCCYToSell = new BigNumber(amount).mul(price);
+
+      if (new BigNumber(counterCCYBalance).lt(counterCCYToSell)) {
+        return reply({ 'error': `Not enough ${counterCCY} at user balance. You have only ${counterCCYBalance} ${counterCCY}.` }).code(405);
+      }
     } else if (type === 'sell') {
       method = 'submitSellOrder';
       assetSymbol = baseCCY;
+      if (new BigNumber(baseCCYBalance).lt(amount)) {
+        return reply({ 'error': `Not enough ${baseCCY} at user balance. You have only ${baseCCYBalance} ${baseCCY}.` }).code(405);
+      }
     } else {
       LOG.warn(`Invalid type: ${type}`);
-      return reply({ 'error': 'Invalid order type' }).code(400);
+      return reply({ 'error': 'Invalid order type' }).code(405);
     }
 
     const assets = LocalStorage.getAssets();
