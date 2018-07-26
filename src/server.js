@@ -115,6 +115,8 @@ server.register([
       console.log(`Orderbook URL: ${config.orderbookUrl}`);
       console.log(`Server running at: ${server.info.uri}`);
       console.log(`Server documentation at: ${server.info.uri}/documentation`);
+    } else {
+      console.log('Starting server error: ', err);
     }
   });
 });

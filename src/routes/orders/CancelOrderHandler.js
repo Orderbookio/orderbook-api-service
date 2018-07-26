@@ -12,7 +12,16 @@ class CancelOrderHandler {
 
     const { token, privateKey, userContractAddress, email } = await AuthService.getAuthData(request.auth.credentials);
 
+    const orders = await OrderbookApi.orders.getUserOpenOrders(token, market);
+
     LOG.info(`User: ${email}. Try to cancel order. Market: ${market}, orderId: ${orderId}`);
+
+    const thereIsSellOrder = orders.sell.some((o) => o.orderId == orderId);
+    const thereIsBuyOrder = orders.buy.some((o) => o.orderId == orderId);
+
+    if (!thereIsBuyOrder && !thereIsSellOrder) {
+      return reply({ 'error': `There is no one order with id ${orderId} at ${market} market.` }).code(405);
+    }
 
     const nonce = await OrderbookApi.account.getNonce(token);
 
