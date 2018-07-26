@@ -20,7 +20,7 @@ class CancelOrderHandler {
     const thereIsBuyOrder = orders.buy.some((o) => o.orderId == orderId);
 
     if (!thereIsBuyOrder && !thereIsSellOrder) {
-      return reply({ 'error': `There is no one order with id ${orderId} at ${market} market.` }).code(405);
+      return reply({ 'error': `There is no order with id ${orderId} at ${market} market.` }).code(405);
     }
 
     const nonce = await OrderbookApi.account.getNonce(token);
