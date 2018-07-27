@@ -20,7 +20,7 @@
   "homepage": "https://github.com/Orderbookio/orderbook-api-service#readme",
   "dependencies": {
     "ambisafe-client-javascript": "git://github.com/Ambisafe/client-javascript.git",
-    "axios": "0.18.0",
+    "axios": "0.16.2",
     "bignumber.js": "4.1.0",
     "bluebird": "3.5.1",
     "boom": "3.1.1",
