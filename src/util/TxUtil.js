@@ -72,7 +72,7 @@ const TxUtil = {
     let isNeedApprove = true;
 
     approveTxs.forEach((tx) => {
-      if (tx.status === txStatus.DONE) {
+      if (tx.status === txStatus.DONE || tx.status === txStatus.PENDING) {
         let { assetAddress, approveAddress } = JSON.parse(tx.options);
 
         if (assetAddress === asset.address && approveAddress === obContractAddress) {
