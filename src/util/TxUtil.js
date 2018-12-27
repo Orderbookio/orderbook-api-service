@@ -33,7 +33,7 @@ const TxUtil = {
       const { contract: assetContract } = ContractsUtil.getAsset(assetSymbol);
       const assetContractAddress = assetContract.address.substr(2);
 
-      const allowance = await OrderbookApi.account.getAllowance(authToken, assetSymbol, assetContract.address, obContract.address);
+      const allowance = await OrderbookApi.account.getAllowance(authToken, assetContract.address, obContract.address);
 
       if (allowance == 0) {
         const nonce = await OrderbookApi.account.getNonce(authToken);
