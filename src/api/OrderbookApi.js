@@ -61,8 +61,8 @@ class OrderbookApi {
         return axios.get(`${ORDERBOOK_SERVER_URL}/submit/nonce`, getAuthHeader(authToken)).then(res => res.data.nonce).catch(handleOBError);
       },
 
-      getAllowance(authToken, assetSymbol, targetContractAddress, approveAddress) {
-        return axios.post(`${ORDERBOOK_SERVER_URL}/account/allowance`, { assetSymbol, targetContractAddress, approveAddress }, getAuthHeader(authToken))
+      getAllowance(authToken, targetContractAddress, approveAddress) {
+        return axios.post(`${ORDERBOOK_SERVER_URL}/account/allowance`, { targetContractAddress, approveAddress }, getAuthHeader(authToken))
           .then(res => res.data.allowance)
           .catch(handleOBError);
       },
