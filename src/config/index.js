@@ -1,6 +1,6 @@
 const config = {
   dev: new (require('./DevConfig'))(),
-  prod: new (require('./ProdConfig'))(),
+  production: new (require('./ProdConfig'))(),
   test: new (require('./TestConfig'))(),
 };
 

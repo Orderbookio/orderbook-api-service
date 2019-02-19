@@ -30,35 +30,35 @@ class OrderbookApi {
       },
 
       getContractByVer(ver = 'latest') {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/contract/${ver}`).then(res => res.data).catch(handleOBError);
+        return axios.get(`${ORDERBOOK_SERVER_URL}/info/ob-contract/${ver}`).then(res => res.data).catch(handleOBError);
       }
     };
 
     this.auth = {
       login(email, password) {
-        return axios.post(`${ORDERBOOK_SERVER_URL}/login`, { email, password }).then(res => res.data).catch(handleOBError);
+        return axios.post(`${ORDERBOOK_SERVER_URL}/auth/login`, { email, password }).then(res => res.data).catch(handleOBError);
       },
 
       isAuthenticated(authToken) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/isAuthenticated`, getAuthHeader(authToken)).then(res => res.data).catch(handleOBError);
+        return axios.get(`${ORDERBOOK_SERVER_URL}/auth/check-token`, getAuthHeader(authToken)).then(res => res.data).catch(handleOBError);
       },
     };
 
     this.account = {
       getInfo(authToken) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/account`, getAuthHeader(authToken))
+        return axios.get(`${ORDERBOOK_SERVER_URL}/account/info`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
 
       getBalances(authToken, assets = []) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/account/balances?assets=${assets.join(',')}`, getAuthHeader(authToken))
+        return axios.get(`${ORDERBOOK_SERVER_URL}/account/balance?assets=${assets.join(',')}`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
 
       getNonce(authToken) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/nonce`, getAuthHeader(authToken)).then(res => res.data.nonce).catch(handleOBError);
+        return axios.get(`${ORDERBOOK_SERVER_URL}/submit/nonce`, getAuthHeader(authToken)).then(res => res.data.nonce).catch(handleOBError);
       },
 
       getAllowance(authToken, assetSymbol, targetContractAddress, approveAddress) {
@@ -100,19 +100,19 @@ class OrderbookApi {
       },
 
       getUserOpenOrders(authToken, market) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/my-orders/`, getAuthHeader(authToken))
+        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/user-orders`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
 
       getOrderbook(market) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}`)
+        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/orders`)
           .then(res => res.data)
           .catch(handleOBError);
       },
 
       getOrderStatus(authToken, market, hash) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/my-orders/${encodeURIComponent(hash)}`, getAuthHeader(authToken))
+        return axios.get(`${ORDERBOOK_SERVER_URL}/markets/${encodeURIComponent(market)}/user-orders-v2/${encodeURIComponent(hash)}`, getAuthHeader(authToken))
           .then(res => res.data)
           .catch(handleOBError);
       },
@@ -120,7 +120,7 @@ class OrderbookApi {
 
     this.txs = {
       getTransactionsByTypes(authToken, types) {
-        return axios.get(`${ORDERBOOK_SERVER_URL}/transactions`, ({ ...{ params: { types } }, ...getAuthHeader(authToken) }))
+        return axios.get(`${ORDERBOOK_SERVER_URL}/account/transactions`, ({ ...{ params: { types } }, ...getAuthHeader(authToken) }))
           .then(res => res.data)
           .catch(handleOBError);
       }

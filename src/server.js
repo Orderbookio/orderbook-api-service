@@ -16,6 +16,8 @@ const users = config.users;
 
 log4js.configure(config.log4jsConfig);
 
+const LOG = log4js.getLogger('Server.js');
+
 
 const server = new Hapi.Server();
 
@@ -50,8 +52,8 @@ server.register([
     }
   }], (err) => {
   if (err) {
-    console.log('Error register plugins:', err);
-    return;
+    LOG.error(err);
+    throw err;
   }
 
   if (config.isAuthEnabled) {
@@ -112,11 +114,11 @@ server.register([
   server.start(async (err) => {
     if (!err) {
       await Application.init();
-      console.log(`Orderbook URL: ${config.orderbookUrl}`);
-      console.log(`Server running at: ${server.info.uri}`);
-      console.log(`Server documentation at: ${server.info.uri}/documentation`);
+      LOG.info(`Server running at: ${server.info.uri}, auth: ${config.isAuthEnabled}`);
+      LOG.info(`Server documentation at: ${server.info.uri}/documentation`);
     } else {
-      console.log('Starting server error: ', err);
+      LOG.error('Starting server error: ', err);
+      process.exit(1);
     }
   });
 });

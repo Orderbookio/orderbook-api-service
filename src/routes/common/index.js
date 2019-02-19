@@ -35,6 +35,7 @@ module.exports = [
     path: `${config.apiVersion1}/markets`,
     method: 'GET',
     config: {
+      auth: config.auth,
       description: 'Get available market names',
       notes: 'Returns an array of market names, for example  [\n' +
       '    "BASE-MONEY",\n' +
@@ -48,6 +49,7 @@ module.exports = [
     path: `${config.apiVersion1}/trades/{market}`,
     method: 'GET',
     config: {
+      auth: config.auth,
       description: 'Get trades by market name',
       notes: 'Returns trades array by market name',
       tags: ['api']

@@ -1,3 +1,5 @@
+const config = require('./config/index');
+
 const LOG = require('log4js').getLogger('Application.js');
 const OrderbookApi = require('./api/OrderbookApi');
 const LocalStorage = require('./services/LocalStorage');
@@ -7,10 +9,10 @@ const web3 = Provider.web3;
 
 const Application = {
   async init() {
-    LOG.info(`Start service initialization`);
+    LOG.info(`OB url: ${config.orderbookUrl}`);
+    LOG.info(`Loading OB contract...`);
 
     const obContract = await OrderbookApi.orderbook.getContractByVer();
-
     const contract = web3.eth.contract(obContract.abi).at(obContract.address);
     contract.ver = obContract.ver;
 
@@ -20,12 +22,13 @@ const Application = {
       contract,
     });
 
-    LOG.info(`Orderbook contract was initiated`);
+    LOG.info(`Loaded OB contract. Version: ${contract.ver}, address: ${obContract.address}`);
+    LOG.info(`Loading assets...`);
 
     const assets = await OrderbookApi.assets.getAssets();
     await LocalStorage.setAssets(assets);
 
-    LOG.info(`Assets were initiated`);
+    LOG.info(`Loaded assets: ${Object.keys(assets)}`);
   }
 };
 module.exports = Application;
