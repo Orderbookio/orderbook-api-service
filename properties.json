@@ -1,10 +1,10 @@
 {
-  "orderbookUrl": "https://api.orderbook.io",
+  "orderbookUrl": "http://localhost:3000",
   "isAuthEnabled": false,
   "users": [
     {
-      "email":"test@mail.com",
-      "OBPassword":"123456",
+      "email":"a@a.com",
+      "OBPassword":"Aa1111111111!",
       "authPassword":"111111"
     },
     {

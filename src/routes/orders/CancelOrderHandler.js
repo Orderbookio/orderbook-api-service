@@ -16,8 +16,8 @@ class CancelOrderHandler {
 
     LOG.info(`User: ${email}. Try to cancel order. Market: ${market}, orderId: ${orderId}`);
 
-    const thereIsSellOrder = orders.sell.some((o) => o.orderId == orderId);
-    const thereIsBuyOrder = orders.buy.some((o) => o.orderId == orderId);
+    const thereIsSellOrder = orders.sell.some((o) => o.id == orderId);
+    const thereIsBuyOrder = orders.buy.some((o) => o.id == orderId);
 
     if (!thereIsBuyOrder && !thereIsSellOrder) {
       return reply({ 'error': `There is no order with id ${orderId} at ${market} market.` }).code(405);

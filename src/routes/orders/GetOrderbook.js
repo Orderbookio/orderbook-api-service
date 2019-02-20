@@ -7,7 +7,12 @@ class GetOpenOrders {
   async handle(request, reply) {
     const market = request.params.market;
 
-    const [, baseCCY, counterCCY] = /(\S*)-(\S*)/g.exec(market);
+    let baseCCY, counterCCY;
+    try {
+      [, baseCCY, counterCCY] = /(\S*)-(\S*)/g.exec(market);
+    } catch (err) {
+      return reply({ error: 'Invalid market' }).code(400);
+    }
 
     const orders = await OrderbookApi.orders.getOrderbook(market);
 

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "IS_RUNNING_TEST=true node mochaRunner.js",
     "dev": "NODE_ENV=dev node src/server.js",
-    "prod": "NODE_ENV=dev node src/server.js"
+    "prod": "NODE_ENV=production node src/server.js"
   },
   "repository": {
     "type": "git",

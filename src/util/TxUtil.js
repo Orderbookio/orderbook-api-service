@@ -14,9 +14,9 @@ const assetsAbi = [{constant: false, inputs: [{name: '_spender', type: 'address'
 const ERC20_MOCK = web3.eth.contract(assetsAbi).at();
 
 const txTypes = {
-  APPROVE: 'approve',
-  EXCHANGE: 'exchange',
-  SET_AUTO_DEPOSIT: 'setAutoDeposit'
+  APPROVE: 'APPROVE',
+  EXCHANGE: 'EXCHANGE',
+  SET_AUTO_DEPOSIT: 'SET_AUTO_DEPOSIT'
 };
 
 const txStatus = {
@@ -66,14 +66,14 @@ const TxUtil = {
     let approveTxs = LocalStorage.getApproveTxs(email);
 
     if (approveTxs.length === 0) {
-      approveTxs = await OrderbookApi.txs.getTransactionsByTypes(token, [txTypes.APPROVE]);
+      approveTxs = await OrderbookApi.txs.getTransactionsByTypes(token, [txTypes.APPROVE, txTypes.SET_AUTO_DEPOSIT]);
       LocalStorage.setApproveTxs(email, approveTxs);
     }
     let isNeedApprove = true;
 
     approveTxs.forEach((tx) => {
       if (tx.status === txStatus.DONE || tx.status === txStatus.PENDING) {
-        let { assetAddress, approveAddress } = JSON.parse(tx.options);
+        let { assetAddress, approveAddress } = tx.options;
 
         if (assetAddress === asset.address && approveAddress === obContractAddress) {
           isNeedApprove = false;
